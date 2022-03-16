@@ -1,0 +1,23 @@
+import { User, Certificate } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+
+class certificateService {
+  static async addCertificate({ certificateName, certificateDesc, certificateDate }) {
+    // 자격증 중복 확인
+    const certificate = await Certificate.findByName({ certificateName });
+    if (certificate) {
+      const errorMessage =
+        "이 자격증 이름은 이미 등록되었습니다. 다른 자격증을 입력해 주세요.";
+      return { errorMessage };
+    }
+    const newCertificate = { certificateName, certificateDesc, certificateDate };
+
+    // db에 저장
+    const createdNewCertificate = await Certificate.create({ newCertificate });
+    createdNewCertificate.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    return createdNewCertificate;
+  }
+
+}
+
+export { certificateService };
