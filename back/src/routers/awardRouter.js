@@ -25,7 +25,7 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
         });
 
         if (newAward.errorMessage) {
-            throw new Error(newAward, errorMessage)
+            throw new Error(newAward.errorMessage)
         }
 
         res.status(201).json(newAward);
@@ -34,5 +34,45 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
     }
 });
 
+// 수상 내역 조회
+awardRouter.get(
+    "/awards/:id",
+    login_required,
+    async function  (req, res, next) {
+        try {
+            const award_id = req.params.id;
+            const currentAwardInfo = await awardService.getAwardInfo({ award_id });
 
+            if (currentAwardInfo) {
+                throw new Error(currentAwardInfo.errorMessage)
+            }
+
+            res.status(200).send(currentAwardInfo);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
+awardRouter.get(
+    "/awardlist/:user_id", 
+    login_required, 
+    async function(req, res, next) {
+        try {
+            const user_id = req.params.user_id;
+            const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+            if (currentUserInfo.errorMessage) {
+                throw new Error(currentUserInfo.errorMessage);
+            }
+        
+            const userId = currentUserInfo._id;
+            const currentAwards = await awardService.getAwards({ userId });
+        
+            res.status(200).send(currentAwards);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
 export { awardRouter };

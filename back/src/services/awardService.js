@@ -17,6 +17,16 @@ class awardService {
 
         return createdNewAward;
     }
+
+    static async getAwardInfo({ award_id }) {
+        const award = await Award.findById({ award_id });
+        return award;
+    }
+
+    static async getAwards({ userId }) {
+        const awardsList = await Award.findByUserId({ userId });
+        return awardsList;
+    }
 }
 
 export { awardService }
