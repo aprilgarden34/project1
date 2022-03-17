@@ -3,7 +3,7 @@ import CertificateCard from "./CertificateCard";
 import CertificateEditForm from "./CertificateEditForm";
 
 function Certificate({ certificate, setCertificates, isEditable }) {
-  //useState로 isEditing 상태를 생성함.
+  //useState로 isEditing 상태를 생성함(편집창 나오는 상태)
   const [isEditing, setIsEditing] = useState(false);
   return (
     <>
