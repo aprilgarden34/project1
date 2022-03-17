@@ -2,9 +2,9 @@ import { Schema, model } from "mongoose";
 
 const CertificateSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    id: {
+      type: String,
+      required: true,
     },
     certificateName: {
       type: String,
@@ -16,6 +16,11 @@ const CertificateSchema = new Schema(
     },
     certificateDate: {
       type: Date,
+      required: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },
