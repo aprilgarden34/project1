@@ -2,9 +2,8 @@ import { Schema, model } from "mongoose";
 
 const AwardSchema = new Schema (
     {
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
+        id: {
+            type: String,
             required: true,
         },
         awardName: {        // 수상 내역
