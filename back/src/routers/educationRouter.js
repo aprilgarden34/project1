@@ -8,28 +8,56 @@ import { userAuthRouter } from "./userRouter";
 
 const educationRouter = Router();
 
-educationRouter.post("/education", async (req,res)=> {
+educationRouter.get("/education", login_required, async (req,res) => {
+    const user_id = req.currentUserId;
+    // const user_id = "85be55c4-f540-439d-956d-273aa9db08ef";
+    const user = await userAuthService.getUserInfo({
+      user_id,
+    })
+    const educations = await educationService.getEducations({user});
+    res.json(educations);
+});
+
+educationRouter.post("/education", login_required, async (req,res)=> {
   
-    // const user_id = req.currentUserId;
-    const user_id = "85be55c4-f540-439d-956d-273aa9db08ef";
+    const user_id = req.currentUserId;
+    // const user_id ="85be55c4-f540-439d-956d-273aa9db08ef";
     const user = await userAuthService.getUserInfo({
       user_id,
     })
   
     const school = req.body.school;
     const major = req.body.major;
-    const education = req.body.education;
+    const position = req.body.position;
 
     // 위 데이터를 유저 db에 추가하기
     const newEducation = await educationService.addEducation({
       user,
       school,
       major,
-      education,
-      
+      position,
     });
     res.json(newEducation);
 });
+
+
+educationRouter.put("/education/:id", login_required, async (req,res)=> {
+
+    const id = req.params.id;
+    const school = req.body.school;
+    const major = req.body.major;
+    const position = req.body.position;
+    
+    const newEducation = await educationService.updateEducation({
+      id,
+      school,
+      major,
+      position,
+    });
+    res.json(newEducation);
+});
+
+
 
 
 export { educationRouter };
