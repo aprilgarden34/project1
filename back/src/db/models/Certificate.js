@@ -11,9 +11,14 @@ class Certificate {
     return certificate;
   }
 
-  static async findById({ userId }) {
-    const certificates = await CertificateModel.find({ userId });
-    return certificates;
+  static async findById({ certificate_id }) {
+    const certificate = await CertificateModel.findOne({ id: certificate_id });
+    return certificate;
+  }
+
+  static async findByUserId({ userId }) {
+    const certificatesList = await CertificateModel.find({ userId });
+    return certificatesList;
   }
 
 }

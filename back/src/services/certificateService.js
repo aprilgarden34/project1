@@ -22,9 +22,14 @@ class certificateService {
     return createdNewCertificate;
   }
 
+  static async getCertificateInfo({ certificate_id }) {
+    const certificate = await Certificate.findById({ certificate_id });
+    return certificate;
+  }
+
   static async getCertificates({ userId }) {
-    const certificates = await Certificate.findById({ userId });
-    return certificates;
+    const certificatesList = await Certificate.findByUserId({ userId });
+    return certificatesList;
   }
 
 }
