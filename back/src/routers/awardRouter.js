@@ -54,6 +54,33 @@ awardRouter.get(
     }
 );
 
+awardRouter.put(
+    "/awards/:id",
+    login_required,
+    async function (req, res, next) {
+        try {
+            // URI로부터 사용자 id를 추출함.
+            const award_id = req.params.id;
+            // body data 로부터 업데이트할 사용자 정보를 추출함.
+            const awardName = req.body.awardName ?? null;
+            const awardDesc = req.body.awardDesc ?? null;
+
+            const toUpdate = { awardName, awardDesc };
+
+            const updatedAward = await awardService.setAward({ award_id, toUpdate });
+
+            if (updatedAward.errorMessage) {
+                throw new Error(updatedAward.errorMessage);
+            }
+
+            res.status(200).json(updatedUser);
+        } catch (error) {
+            next(error);
+        }
+    }
+)
+
+
 awardRouter.get(
     "/awardlist/:user_id", 
     login_required, 
