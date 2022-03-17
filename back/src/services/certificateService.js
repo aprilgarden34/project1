@@ -27,6 +27,39 @@ class certificateService {
     return certificate;
   }
 
+  static async setCertificateInfo({ certificate_id, toUpdate }) {
+    // 우선 해당 id 의 자격증이 db에 존재하는지 여부 확인
+    let certificate = await Certificate.findById({ certificate_id });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!certificate) {
+      const errorMessage =
+        "자격증 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    // 업데이트 대상에 certificateName이 있다면, 업데이트 진행
+    if (toUpdate.certificateName) {
+      const fieldToUpdate = "certificateName";
+      const newValue = toUpdate.certificateName;
+      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.certificateDesc) {
+      const fieldToUpdate = "certificateDesc";
+      const newValue = toUpdate.certificateDesc;
+      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.certificateDate) {
+      const fieldToUpdate = "certificateDate";
+      const newValue = toUpdate.certificateDate;
+      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+    }
+
+    return certificate;
+  }
+
   static async getCertificates({ userId }) {
     const certificatesList = await Certificate.findByUserId({ userId });
     return certificatesList;

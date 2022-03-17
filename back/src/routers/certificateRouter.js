@@ -63,6 +63,35 @@ certificateRouter.get(
   }
 );
 
+// 자격증 수정
+certificateRouter.put(
+  "/certificates/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      // URI로부터 자격증 id를 추출함.
+      const certificate_id = req.params.id;
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const certificateName = req.body.certificateName ?? null;
+      const certificateDesc = req.body.certificateDesc ?? null;
+      const certificateDate = req.body.certificateDate ?? null;
+
+      const toUpdate = { certificateName, certificateDesc, certificateDate };
+
+      // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+      const updatedCertificate = await certificateService.setCertificateInfo({ certificate_id, toUpdate });
+
+      if (updatedCertificate.errorMessage) {
+        throw new Error(updatedCertificate.errorMessage);
+      }
+
+      res.status(200).json(updatedCertificate);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // 해당 유저 자격증 조회
 certificateRouter.get(
   "/certificatelist/:user_id",
