@@ -22,6 +22,11 @@ class certificateService {
     return createdNewCertificate;
   }
 
+  static async getCertificates({ userId }) {
+    const certificates = await Certificate.findById({ userId });
+    return certificates;
+  }
+
 }
 
 export { certificateService };

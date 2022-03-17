@@ -43,25 +43,51 @@ certificateRouter.post("/certificate/create", login_required, async function (re
   }
 });
 
-// 유저 자격증 한 개 조회
-/*userAuthRouter.get(
+// 유저 자격증 조회
+certificateRouter.get(
   "/certificates/:id",
   login_required,
   async function (req, res, next) {
     try {
-      const certificate_id = req.params.id;
-      const currentCertificate = await certificateService.getCertificates({ user_id });
+      const user_id = req.params.id;
+      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
 
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
       }
 
-      res.status(200).send(currentUserInfo);
+      const userId = currentUserInfo._id;
+      const currentCertificates = await certificateService.getCertificates({ userId });
+
+      res.status(200).send(currentCertificates);
     } catch (error) {
       next(error);
     }
   }
-);*/
+);
+
+certificateRouter.get(
+  "/certificatelist/:user_id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.user_id;
+      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+      if (currentUserInfo.errorMessage) {
+        throw new Error(currentUserInfo.errorMessage);
+      }
+
+      const userId = currentUserInfo._id;
+      const currentCertificates = await certificateService.getCertificates({ userId });
+
+      res.status(200).send(currentCertificates);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 
 export { certificateRouter };

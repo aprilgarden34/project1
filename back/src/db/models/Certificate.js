@@ -11,6 +11,11 @@ class Certificate {
     return certificate;
   }
 
+  static async findById({ userId }) {
+    const certificates = await CertificateModel.find({ userId });
+    return certificates;
+  }
+
 }
 
 export { Certificate };
