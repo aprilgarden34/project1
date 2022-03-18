@@ -75,7 +75,7 @@ awardRouter.put(
                 throw new Error(updatedAward.errorMessage);
             }
 
-            res.status(200).json(updatedUser);
+            res.status(200).json(updatedAward);
         } catch (error) {
             next(error);
         }
@@ -95,7 +95,7 @@ awardRouter.get(
                 throw new Error(currentUserInfo.errorMessage);
             }
         
-            const userId = currentUserInfo.id;
+            const userId = currentUserInfo._id;
             const currentAwards = await awardService.getAwards({ userId });
         
             res.status(200).send(currentAwards);
@@ -104,4 +104,5 @@ awardRouter.get(
         }
     }
 );
+
 export { awardRouter };
