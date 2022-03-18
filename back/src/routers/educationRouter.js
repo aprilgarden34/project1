@@ -8,9 +8,9 @@ import { userAuthRouter } from "./userRouter";
 
 const educationRouter = Router();
 
-educationRouter.get("/education", login_required, async (req, res, next) => {
+educationRouter.get("/educationlist/:user_id", async (req, res, next) => {
 
-  const user_id = req.currentUserId;
+  const user_id = req.params.user_id;
   const user = await userAuthService.getUserInfo({
     user_id,
   });
@@ -20,7 +20,8 @@ educationRouter.get("/education", login_required, async (req, res, next) => {
 
 });
 
-educationRouter.post("/education", login_required, async (req, res, next) => {
+educationRouter.post("/education/create", login_required,  async (req, res, next) => {
+  
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -28,6 +29,7 @@ educationRouter.post("/education", login_required, async (req, res, next) => {
       );
     }
     const user_id = req.currentUserId;
+    // const user_id = "85be55c4-f540-439d-956d-273aa9db08ef";
     const user = await userAuthService.getUserInfo({
       user_id,
     });
@@ -43,6 +45,7 @@ educationRouter.post("/education", login_required, async (req, res, next) => {
       major,
       position,
     });
+    
     if (newEducation.errorMessage) {
       throw new Error(newEducation.errorMessage);
     }
@@ -54,7 +57,7 @@ educationRouter.post("/education", login_required, async (req, res, next) => {
 });
 
 
-educationRouter.put("/education/:id", login_required, async (req, res, next) => {
+educationRouter.put("/educations/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const school = req.body.school;
