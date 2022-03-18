@@ -46,10 +46,12 @@ class awardService {
             const newValue = toUpdate.awardDesc;
             award = await Award.update({ award_id, fieldToUpdate, newValue})
         }
+
+        return award;
     }
 
-    static async getAwards({ user_id }) {
-        const awardsList = await Award.findByUserId({ user_id });
+    static async getAwards({ userId }) {
+        const awardsList = await Award.findByUserId({ userId });
         return awardsList;
     }
 }

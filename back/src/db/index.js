@@ -19,4 +19,4 @@ db.on("error", (error) =>
 );
 
 
-export { Award };
+export { User, Award };
