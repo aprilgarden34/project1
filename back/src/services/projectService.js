@@ -19,6 +19,10 @@ class projectService {
         
     }
 
+    static async getProjectInfo({ project_id }) {
+        const project = await Project.findById({ project_id });
+        return project;
+    }
 }
 
 export { projectService };

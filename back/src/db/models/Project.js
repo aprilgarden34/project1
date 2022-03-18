@@ -10,6 +10,11 @@ class Project {
         const project = await ProjectModel.findOne({ projectName });
         return project;
     }
+
+    static async findById({ project_id }) {
+        const project = await ProjectModel.findOne({ id: project_id });
+        return project;
+      }
 }
 
 export { Project };

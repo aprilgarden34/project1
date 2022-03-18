@@ -40,4 +40,23 @@ projectRouter.post('/project/create', login_required, async function (req, res, 
     }
 });
 
+projectRouter.get(
+    "/projects/:id",
+    login_required,
+    async function (req, res, next) {
+        try {
+            const project_id = req.params.id;
+            const currentProjectInfo = await projectService.getProjectInfo({ project_id });
+
+            if (currentProjectInfo.errorMessage) {
+                throw new Error(currentProjectInfo.errorMessage)
+            }
+
+            res.status(200).send(currentProjectInfo);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 export { projectRouter };
