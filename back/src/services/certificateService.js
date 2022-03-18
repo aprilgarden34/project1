@@ -7,7 +7,7 @@ class certificateService {
     const certificate = await Certificate.findByName({ certificateName });
     if (certificate) {
       const errorMessage =
-        "이 자격증 이름은 이미 등록되었습니다. 다른 자격증을 입력해 주세요.";
+        "이미 등록된 자격증입니다. 다른 자격증을 입력해 주세요.";
       return { errorMessage };
     }
     // id 는 유니크 값 부여
