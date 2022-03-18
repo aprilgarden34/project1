@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+
+
 import { awardRouter } from "./routers/awardRouter";
 
 const app = express();
@@ -22,6 +24,9 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
+
+
+
 
 // Award API
 app.use(awardRouter);
