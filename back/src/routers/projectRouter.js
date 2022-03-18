@@ -59,4 +59,26 @@ projectRouter.get(
     }
 );
 
+projectRouter.get(
+    "/projectlist/:user_id",
+    login_required, 
+    async function(req, res, next) {
+        try {
+            const user_id = req.params.user_id;
+            const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+            if (currentUserInfo.errorMessage) {
+                throw new Error(currentUserInfo.errorMessage);
+            }
+        
+            const userId = currentUserInfo._id;
+            const currentProjects = await projectService.getProjects({ userId });
+        
+            res.status(200).send(currentProjects);
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 export { projectRouter };
