@@ -59,6 +59,34 @@ projectRouter.get(
     }
 );
 
+projectRouter.put(
+    "/projects/:id",
+    login_required,
+    async function (req, res, next) {
+        try {
+            // URI로부터 사용자 id를 추출함.
+            const project_id = req.params.id;
+            // body data 로부터 업데이트할 사용자 정보를 추출함.
+            const projectName = req.body.projectName ?? null;
+            const projectDesc = req.body.projectDesc ?? null;
+            const projectStart = req.body.projectStart ?? null;
+            const projectEnd = req.body.projectEnd ?? null;
+
+            const toUpdate = { projectName, projectDesc, projectStart, projectEnd };
+
+            const updatedProject = await projectService.setProject({ project_id, toUpdate });
+
+            if (updatedProject.errorMessage) {
+                throw new Error(updatedProject.errorMessage);
+            }
+
+            res.status(200).json(updatedProject);
+        } catch (error) {
+            next(error);
+        }
+    }
+)
+
 projectRouter.get(
     "/projectlist/:user_id",
     login_required, 

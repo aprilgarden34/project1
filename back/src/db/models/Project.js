@@ -20,6 +20,19 @@ class Project {
         const projectList = await ProjectModel.find({ userId });
         return projectList;
     }
+
+    static async update({ project_id, fieldToUpdate, newValue }) {
+        const filter = { id: project_id };
+        const update = { [fieldToUpdate]: newValue };
+        const option = { returnOriginal: false };
+    
+        const updatedProject = await ProjectModel.findOneAndUpdate(
+          filter,
+          update,
+          option
+        );
+        return updatedProject;
+    }
 }
 
 export { Project };
