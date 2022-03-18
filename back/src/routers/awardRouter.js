@@ -18,8 +18,10 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
 
         const awardName = req.body.awardName;
         const awardDesc = req.body.awardDesc;
+        const userId = currentUserInfo._id;
 
         const newAward = await awardService.addAward({
+            userId,
             awardName,
             awardDesc,
         });
