@@ -3,7 +3,9 @@ import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { certificateRouter } from "./routers/certificateRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { awardRouter } from "./routers/awardRouter";
 import { educationRouter } from "./routers/educationRouter";
+
 const app = express();
 
 // CORS 에러 방지
@@ -21,8 +23,9 @@ app.get("/", (req, res) => {
 });
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
-
-app.use(userAuthRouter); 
+app.use(userAuthRouter);
+// Award API
+app.use(awardRouter);
 app.use(educationRouter); 
 // Certificate API
 app.use(certificateRouter);
