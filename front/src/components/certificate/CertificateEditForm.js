@@ -9,24 +9,24 @@ function CertificateEditForm({
   setIsEditing,
 }) {
   
-  const [title, setTitle] = useState(currentCertificate.title);
-  const [description, setDescription] = useState(currentCertificate.description);
-  const [whenDate, setWhenDate] = useState(new Date(currentCertificate.when_date));
+  const [certificateName, setTitle] = useState(currentCertificate.certificateName);
+  const [certificateDesc, setCertificateDesc] = useState(currentCertificate.certificateDesc);
+  const [whenDate, setWhenDate] = useState(new Date(currentCertificate.certificateDate));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user_id = currentCertificate.user_id;
-    const when_date = whenDate.toISOString().split("T")[0];
+    const currentUserId = currentCertificate.currentUserId;
+    const certificateDate = whenDate.toISOString().split("T")[0];
 
     await Api.put(`certificates/${currentCertificate.id}`, {
-      user_id,
-      title,
-      description,
-      when_date,
+      currentUserId,
+      certificateName,
+      certificateDesc,
+      certificateDate,
     });
     
-    const res = await Api.get("certificatelist", user_id);
+    const res = await Api.get("certificatelist", currentUserId);
     setCertificates(res.data);
     // isEditing을 false로 세팅하여 메뉴 화면으로 돌림.
     setIsEditing(false);
@@ -38,7 +38,7 @@ function CertificateEditForm({
         <Form.Control
           type="text"
           placeholder="자격증 제목"
-          value={title}
+          value={certificateName}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -47,8 +47,8 @@ function CertificateEditForm({
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={certificateDesc}
+          onChange={(e) => setCertificateDesc(e.target.value)}
         />
       </Form.Group>
 
