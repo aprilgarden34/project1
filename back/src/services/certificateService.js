@@ -24,6 +24,12 @@ class certificateService {
 
   static async getCertificateInfo({ certificate_id }) {
     const certificate = await Certificate.findById({ certificate_id });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!certificate) {
+      const errorMessage = "해당 자격증은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage }
+    }
     return certificate;
   }
 
@@ -34,7 +40,7 @@ class certificateService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
       const errorMessage =
-        "자격증 내역이 없습니다. 다시 한 번 확인해 주세요.";
+        "해당 자격증은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -62,6 +68,13 @@ class certificateService {
 
   static async getCertificates({ userId }) {
     const certificatesList = await Certificate.findByUserId({ userId });
+
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!certificatesList) {
+      const errorMessage =
+        "해당 사용자는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
     return certificatesList;
   }
 
