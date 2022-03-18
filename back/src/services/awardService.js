@@ -48,8 +48,8 @@ class awardService {
         }
     }
 
-    static async getAwards({ userId }) {
-        const awardsList = await Award.findByUserId({ userId });
+    static async getAwards({ user_id }) {
+        const awardsList = await Award.findByUserId({ user_id });
         return awardsList;
     }
 }
