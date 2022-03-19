@@ -22,6 +22,7 @@
           <Card.Title>수상이력</Card.Title>
           {awards.map((award) => (
             <Award
+              portfolioOwnerId={portfolioOwnerId}
               key={award.id}
               award={award}
               setAwards={setAwards}
