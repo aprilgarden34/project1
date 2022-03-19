@@ -7,6 +7,7 @@ function CertificateEditForm({
   currentCertificate,
   setCertificates,
   setIsEditing,
+  portfolioOwnerId,
 }) {
   
   const [certificateName, setTitle] = useState(currentCertificate.certificateName);
@@ -16,7 +17,7 @@ function CertificateEditForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const currentUserId = currentCertificate.currentUserId;
+    const currentUserId = portfolioOwnerId;
     const certificateDate = whenDate.toISOString().split("T")[0];
 
     await Api.put(`certificates/${currentCertificate.id}`, {
