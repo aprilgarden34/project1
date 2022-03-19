@@ -16,30 +16,30 @@ import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
-  const [title, setTitle] = useState(currentProject.title);
-  const [description, setDescription] = useState(currentProject.description);
-  const [fromDate, setFromDate] = useState(new Date(currentProject.from_date));
-  const [toDate, setToDate] = useState(new Date(currentProject.to_date));
+  const [projectName, setTitle] = useState(currentProject.projectName);
+  const [projectDesc, setDescription] = useState(currentProject.projectDesc);
+  const [fromDate, setFromDate] = useState(new Date(currentProject.projectStart));
+  const [toDate, setToDate] = useState(new Date(currentProject.projectEnd));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // currentProject의 user_id를 user_id 변수에 할당함.
-    const user_id = currentProject.user_id;
-    const from_date = fromDate.toISOString().split("T")[0];
-    const to_date = toDate.toISOString().split("T")[0];
+    // currentProject의 user_id를 userId 변수에 할당함.
+    const userId = currentProject.userId;
+    const projectStart = fromDate.toISOString().split("T")[0];
+    const projectEnd = toDate.toISOString().split("T")[0];
 
     // "projects/프로젝트id" 엔드포인트로 PUT 요청함.
     await Api.put(`projects/${currentProject.id}`, {
-      user_id,
-      title,
-      description,
-      from_date,
-      to_date,
+      userId,
+      projectName,
+      projectDesc,
+      projectStart,
+      projectEnd,
     });
 
     // "projectlist/유저id" 엔드포인트로 GET 요청함.
-    const res = await Api.get("projectlist", user_id);
+    const res = await Api.get("projectlist", userId);
     // projects를 response의 data로 세팅함. 새로 편집한 정보까지 포함 업데이트.
     setProjects(res.data);
     // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.(메인화면 모드)
@@ -52,7 +52,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="프로젝트 제목"
-          value={title}
+          value={projectName}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -61,7 +61,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={description}
+          value={projectDesc}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>

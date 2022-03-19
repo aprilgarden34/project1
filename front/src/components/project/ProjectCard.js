@@ -11,12 +11,12 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
         <Col>
-          {project.title}
+          {project.projectName}
           <br />
-          <span className="text-muted">{project.description}</span>
+          <span className="text-muted">{project.projectDesc}</span>
           <br />
           <span className="text-muted">
-            {`${project.from_date} ~ ${project.to_date}`}
+            {`${project.projectStart} ~ ${project.projectEnd}`}
           </span>
         </Col>
         {isEditable && (

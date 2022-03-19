@@ -11,30 +11,30 @@ import * as Api from "../../api";
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [projectName, setTitle] = useState("");
+  const [projectDesc, setDescription] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // portfolioOwnerId를 user_id 변수에 할당함.
-    const user_id = portfolioOwnerId;
-    const from_date = fromDate.toISOString().split("T")[0];
-    const to_date = toDate.toISOString().split("T")[0];
+    // portfolioOwnerId를 userId 변수에 할당함.
+    const userId = portfolioOwnerId;
+    const projectStart = fromDate.toISOString().split("T")[0];
+    const projectEnd = toDate.toISOString().split("T")[0];
 
     // "project/create" 엔드포인트로 post요청함. 새롭게 추가된 프로젝트 관련 정보 서버 전달.
     await Api.post("project/create", {
-      user_id,
-      title,
-      description,
-      from_date,
-      to_date,
+      userId,
+      projectName,
+      projectDesc,
+      projectStart,
+      projectEnd,
     });
 
     // "projectlist/유저id" 엔드포인트로 get요청함.
-    const res = await Api.get("projectlist", user_id);
+    const res = await Api.get("projectlist", userId);
     // projects를 response의 data로 세팅함. 추가된 프로젝트 포함 전체 프로젝트 정보를 받아와서 업데이트.
     setProjects(res.data);
     // project를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅함(메인 화면 모드)
@@ -47,7 +47,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="프로젝트 제목"
-          value={title}
+          value={projectName}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -56,7 +56,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         <Form.Control
           type="text"
           placeholder="상세내역"
-          value={description}
+          value={projectDesc}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
