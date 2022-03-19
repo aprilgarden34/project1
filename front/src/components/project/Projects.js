@@ -44,6 +44,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
         <Card.Title>프로젝트</Card.Title>
         {projects.map((project) => (
           <Project
+            portfolioOwnerId={portfolioOwnerId}
             key={project.id}
             project={project}
             setProjects={setProjects}

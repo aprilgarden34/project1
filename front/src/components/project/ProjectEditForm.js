@@ -15,7 +15,7 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import * as Api from "../../api";
 
-function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
+function ProjectEditForm({ portfolioOwnerId, currentProject, setProjects, setIsEditing }) {
   const [projectName, setTitle] = useState(currentProject.projectName);
   const [projectDesc, setDescription] = useState(currentProject.projectDesc);
   const [fromDate, setFromDate] = useState(new Date(currentProject.projectStart));
@@ -25,7 +25,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     e.preventDefault();
 
     // currentProject의 user_id를 userId 변수에 할당함.
-    const userId = currentProject.userId;
+    const userId = portfolioOwnerId;
     const projectStart = fromDate.toISOString().split("T")[0];
     const projectEnd = toDate.toISOString().split("T")[0];
 
