@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
+function AwardEditForm({ portfolioOwnerId,  currentAward, setAwards, setIsEditing }) {
   //awardName 상태를 생성
   const [awardName, setAwardName] = useState(currentAward.awardName);
   //awardDesc 상태를 생성
@@ -12,7 +12,7 @@ function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
     e.preventDefault();
 
     // currentAward의 user_id를 user_id 변수에 할당
-    const user_id = currentAward.user_id;
+    const user_id = portfolioOwnerId;
 
     // 수정한 내용을 "awards/수상 id" 엔드포인트로 PUT 요청
     await Api.put(`awards/${currentAward.id}`, {
