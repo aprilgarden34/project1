@@ -15,7 +15,7 @@ const CertificateSchema = new Schema(
       required: true,
     },
     certificateDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     userId: {
