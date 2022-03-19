@@ -10,7 +10,7 @@ function EducationCard({ education, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">
             {education?.major}
-            {education?.position})
+            ({education?.position})
           </span>
         </Col>
         {isEditable && (

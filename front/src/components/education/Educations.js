@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
-import Education from "./Educations";
+import Education from "./Education";
 import EducationAddForm from "./EducationAddForm";
 
 function Educations({ portfolioOwnerId, isEditable }) {
@@ -24,6 +24,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
         <Card.Title>학력</Card.Title>
         {educations.map((education) => (
           <Education
+            portfolioOwnerId={portfolioOwnerId}
             key={education.id}
             education={education}
             setEducations={setEducations}

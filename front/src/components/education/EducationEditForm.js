@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
+function EducationEditForm({ portfolioOwnerId, currentEducation, setEducations, setIsEditing }) {
   //useState로 school 상태를 생성함.
   const [school, setSchool] = useState(currentEducation.school);
   //useState로 major 상태를 생성함.
@@ -14,7 +14,7 @@ function EducationEditForm({ currentEducation, setEducations, setIsEditing }) {
     e.preventDefault();
 
     // currentEducation의 user_id를 user_id 변수에 할당함.
-    const user_id = currentEducation.user_id;
+    const user_id = portfolioOwnerId;
 
     // 수정한 교육사항을 "educations/교육id" 엔드포인트로 PUT 요청함.
     await Api.put(`educations/${currentEducation.id}`, {
