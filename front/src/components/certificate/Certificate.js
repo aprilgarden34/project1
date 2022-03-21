@@ -16,7 +16,6 @@ function Certificate({ portfolioOwnerId, certificate, certificates, setCertifica
         />
       ) : (
         <CertificateCard
-          portfolioOwnerId={portfolioOwnerId}
           certificate={certificate}
           certificates={certificates}
           setCertificates={setCertificates}
