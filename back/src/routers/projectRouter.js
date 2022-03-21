@@ -16,11 +16,8 @@ projectRouter.post('/project/create', login_required, async function (req, res, 
             throw new Error(currentUserInfo.errorMessage)
         }
     
+        const { projectName, projectDesc, projectStart, projectEnd } = req.body;
         const userId = currentUserInfo._id;
-        const projectName = req.body.projectName;
-        const projectDesc = req.body.projectDesc;
-        const projectStart = req.body.projectStart;
-        const projectEnd = req.body.projectEnd;
     
         const newProject = await projectService.addProject({
             userId,
