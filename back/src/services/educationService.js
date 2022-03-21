@@ -29,6 +29,7 @@ class educationService {
 
     static parseEducation({ education }) {
         return {
+            id:education.id,
             school: education.school,
             major: education.major,
             position: education.position
