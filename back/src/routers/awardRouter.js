@@ -16,8 +16,7 @@ awardRouter.post("/award/create", login_required, async function(req, res, next)
             throw new Error(currentUserInfo.errorMessage)
         }
 
-        const awardName = req.body.awardName;
-        const awardDesc = req.body.awardDesc;
+        const { awardName, awardDesc } = req.body;
         const userId = currentUserInfo._id;
 
         const newAward = await awardService.addAward({
