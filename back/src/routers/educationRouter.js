@@ -8,7 +8,7 @@ import { userAuthRouter } from "./userRouter";
 
 const educationRouter = Router();
 
-educationRouter.get("/educationlist/:user_id", async (req, res, next) => {
+educationRouter.get("/education/:user_id", async (req, res, next) => {
 
   const user_id = req.params.user_id;
   const user = await userAuthService.getUserInfo({
