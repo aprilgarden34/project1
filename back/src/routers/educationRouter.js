@@ -71,7 +71,7 @@ educationRouter.put("/educations/:id", async (req, res, next) => {
       position,
     });
 
-    res.json(newEducation);
+    res.status(201).json(newEducation);
   } catch (error) {
     next(error);
   }
