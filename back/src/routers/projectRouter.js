@@ -42,8 +42,8 @@ projectRouter.get(
     login_required,
     async function (req, res, next) {
         try {
-            const project_id = req.params.id;
-            const currentProjectInfo = await projectService.getProjectInfo({ project_id });
+            const projectId = req.params.id;
+            const currentProjectInfo = await projectService.getProjectInfo({ projectId });
 
             if (currentProjectInfo.errorMessage) {
                 throw new Error(currentProjectInfo.errorMessage)
@@ -62,7 +62,7 @@ projectRouter.put(
     async function (req, res, next) {
         try {
             // URI로부터 사용자 id를 추출함.
-            const project_id = req.params.id;
+            const projectId = req.params.id;
             // body data 로부터 업데이트할 사용자 정보를 추출함.
             const projectName = req.body.projectName ?? null;
             const projectDesc = req.body.projectDesc ?? null;
@@ -71,7 +71,7 @@ projectRouter.put(
 
             const toUpdate = { projectName, projectDesc, projectStart, projectEnd };
 
-            const updatedProject = await projectService.setProject({ project_id, toUpdate });
+            const updatedProject = await projectService.setProject({ projectId, toUpdate });
 
             if (updatedProject.errorMessage) {
                 throw new Error(updatedProject.errorMessage);
@@ -115,10 +115,10 @@ projectRouter.delete(
   async function (req, res, next) {
     try {
       // URI로부터 자격증 id를 추출함.
-      const project_id = req.params.id;
+      const projectId = req.params.id;
       
       // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
-      const deletedProject = await projectService.delProject({ project_id });
+      const deletedProject = await projectService.delProject({ projectId });
 
       if (deletedProject.errorMessage) {
         throw new Error(deletedProject.errorMessage);
