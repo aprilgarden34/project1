@@ -33,6 +33,17 @@ class Project {
         );
         return updatedProject;
     }
+
+// ----------------- delete 기능 추가 ----------------------------------------
+
+
+    static async removeById({ project_id }) {
+        const deletedProjectList = await CertificateModel.remove({id: project_id})
+        return deletedProjectList
+  } 
+
+// ----------------------------------------------------------------------------
+
 }
 
 export { Project };
