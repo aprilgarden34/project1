@@ -20,9 +20,7 @@ certificateRouter.post("/certificate/create", login_required, async function (re
     }
 
     // req (request) 에서 데이터 가져오기
-    const certificateName = req.body.certificateName;
-    const certificateDesc = req.body.certificateDesc;
-    const certificateDate = req.body.certificateDate;
+    const { certificateName, certificateDesc, certificateDate} = req.body;
     const userId = currentUserInfo._id;
 
     // 위 데이터를 자격증 db에 추가하기
