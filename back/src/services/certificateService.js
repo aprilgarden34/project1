@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 class certificateService {
   static async addCertificate({ certificateName, certificateDesc, certificateDate, userId  }) {
     // 자격증 중복 확인
-    const certificate = await Certificate.findByName({ certificateName });
+    const certificate = await Certificate.findByUserIdAndName({ userId, certificateName });
     if (certificate) {
       const errorMessage =
         "이미 등록된 자격증입니다. 다른 자격증을 입력해 주세요.";
