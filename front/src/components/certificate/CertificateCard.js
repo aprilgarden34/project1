@@ -7,8 +7,17 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
   return (
     <Card.Text>
       <Row className="align-items-center">
-        <Col xs lg="1">
-          <div></div>
+        <Col xs lg="1">              
+            <form action = "/certificateImage" method="POST"
+              enctype = "multipart/form-data"                
+              onSubmit = {() => Api.post("certificateImage", 
+              {
+                currentUserId: certificate.currentUserId,
+                certificateName: certificate.certificateName,
+              })}>
+              <input type="file" name="certificateImage" defaultValue="경로" />
+              <button type="submit">제출</button> 
+            </ form>         
         </Col>
         <Col>    
           <div className="text-center"> 
@@ -46,9 +55,25 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
               </div>
             </Col>
         )}
-      </Row>
+      </ Row>
     </Card.Text>
   );
 }
 
 export default CertificateCard;
+
+
+// async function post(endpoint, data) {
+//   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+//   // 예시: {name: "Kim"} => {"name": "Kim"}
+//   const bodyData = JSON.stringify(data);
+//   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+//   console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+//   return axios.post(serverUrl + endpoint, bodyData, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+//     },
+//   });
+// }

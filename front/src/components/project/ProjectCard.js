@@ -12,8 +12,17 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
-        <Col xs lg="1">
-          <div></div>
+        <Col xs lg="1">                   
+            <form action = "/projectImage" method="POST"
+              enctype = "multipart/form-data"                
+              onSubmit = {() => Api.post("projectImage", 
+              {
+                currentUserId: project.userId,
+                projectName: project.projectName,
+              })}>
+              <input type="file" name="projectImage" defaultValue="경로" />
+              <button type="submit">제출</button> 
+            </ form>           
         </Col>
         <Col>
           {project.projectName}
@@ -32,7 +41,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
                 size="sm"
                 onClick={() => setIsEditing((prev) => !prev)}
                 className="mr-3"
-            >
+              >
                 편집
               </Button>
               <Button

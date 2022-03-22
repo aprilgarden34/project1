@@ -114,10 +114,10 @@ projectRouter.delete(
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 자격증 id를 추출함.
+      // URI로부터 프로젝트 id를 추출함.
       const project_id = req.params.id;
       
-      // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
+      // 해당 프로젝트 아이디로 프로젝트 정보를 db에서 찾아 삭제함.
       const deletedProject = await projectService.delProject({ project_id });
 
       if (deletedProject.errorMessage) {
