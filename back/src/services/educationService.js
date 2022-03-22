@@ -26,6 +26,11 @@ class educationService {
         })
         return educations;
     }
+    static async deleteEducation({id}){
+        const education = await Education.delete({id});
+        return this.parseEducation({education})
+    }
+
 
     static parseEducation({ education }) {
         return {

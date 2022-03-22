@@ -20,8 +20,8 @@ educationRouter.get("/education/:user_id", async (req, res, next) => {
 
 });
 
-educationRouter.post("/education/create", login_required,  async (req, res, next) => {
-  
+educationRouter.post("/education/create", login_required, async (req, res, next) => {
+
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -45,7 +45,7 @@ educationRouter.post("/education/create", login_required,  async (req, res, next
       major,
       position,
     });
-    
+
     if (newEducation.errorMessage) {
       throw new Error(newEducation.errorMessage);
     }
@@ -77,7 +77,15 @@ educationRouter.put("/educations/:id", async (req, res, next) => {
   }
 });
 
+educationRouter.delete("/education/:id", async (req, res, next) => {
+    const id = req.params.id;
+    const deleteEducaiton = await educationService.deleteEducation({
+      id,
+    });
 
+    res.status(201).json(deleteEducaiton);
+
+});
 
 
 export { educationRouter };
