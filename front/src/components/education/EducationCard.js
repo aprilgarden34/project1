@@ -6,9 +6,9 @@ function EducationCard({ education, isEditable, setIsEditing }) {
     <Card.Text>
       <Row className="align-items-center">
         <Col>
-        <span>{education?.school}</span>
+        <span className= "mb-4">{education?.school}</span>
           <br />
-          <span className="text-muted">
+        <span className="text-muted" style={{display: 'block'}}>
             {education?.major}
             ({education?.position})
           </span>
