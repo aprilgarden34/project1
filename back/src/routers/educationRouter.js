@@ -81,3 +81,4 @@ educationRouter.put("/educations/:id", async (req, res, next) => {
 
 
 export { educationRouter };
+
