@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 class projectService {
     static async addProject({ userId, projectName, projectDesc, projectStart, projectEnd }) {
-        const project = await Project.findByName({ projectName });        // 수상 내역 중복 검사
+        // 프로젝트 내역 중복 검사
+        const project = await Project.findByUserIdAndName({ userId, projectName });        
         if ( project ) {
             const errorMessage = "이미 존재하는 프로젝트입니다. 다른 프로젝트를 입력해 주세요.";
             return { errorMessage };
