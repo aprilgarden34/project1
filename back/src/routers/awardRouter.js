@@ -108,7 +108,7 @@ awardRouter.get(
 
 // 수상 내역 삭제
 awardRouter.delete(
-    "/awardlist/:id",
+    "/awards/:id",
     login_required,
     async function (req, res, next) {
       try {
