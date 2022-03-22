@@ -41,8 +41,8 @@ awardRouter.get(
     login_required,
     async function (req, res, next) {
         try {
-            const award_id = req.params.id;
-            const currentAwardInfo = await awardService.getAwardInfo({ award_id });
+            const awardId = req.params.id;
+            const currentAwardInfo = await awardService.getAwardInfo({ awardId });
 
             if (currentAwardInfo.errorMessage) {
                 throw new Error(currentAwardInfo.errorMessage)
@@ -60,15 +60,15 @@ awardRouter.put(
     login_required,
     async function (req, res, next) {
         try {
-            // URI로부터 사용자 id를 추출함.
-            const award_id = req.params.id;
-            // body data 로부터 업데이트할 사용자 정보를 추출함.
+            // URI로부터 award id를 추출함.
+            const awardId = req.params.id;
+            // body data 로부터 업데이트할 award 정보를 추출함.
             const awardName = req.body.awardName ?? null;
             const awardDesc = req.body.awardDesc ?? null;
 
             const toUpdate = { awardName, awardDesc };
 
-            const updatedAward = await awardService.setAward({ award_id, toUpdate });
+            const updatedAward = await awardService.setAward({ awardId, toUpdate });
 
             if (updatedAward.errorMessage) {
                 throw new Error(updatedAward.errorMessage);

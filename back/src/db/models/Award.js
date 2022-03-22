@@ -11,8 +11,8 @@ class Award {
         return award;
     }
 
-    static async findById({ award_id }) {
-        const award = await AwardModel.findOne({ id: award_id });
+    static async findById({ awardId }) {
+        const award = await AwardModel.findOne({ id: awardId });
         return award;
     }
     
@@ -21,8 +21,8 @@ class Award {
         return awardList;
     }
     
-    static async update({ award_id, fieldToUpdate, newValue }) {
-        const filter = { id: award_id };
+    static async update({ awardId, fieldToUpdate, newValue }) {
+        const filter = { id: awardId };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
     

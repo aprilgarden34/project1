@@ -18,14 +18,14 @@ class awardService {
         return createdNewAward;
     }
 
-    static async getAwardInfo({ award_id }) {
-        const award = await Award.findById({ award_id });
+    static async getAwardInfo({ awardId }) {
+        const award = await Award.findById({ awardId });
         return award;
     }
 
-    static async setAward({ award_id, toUpdate }) {
+    static async setAward({ awardId, toUpdate }) {
         // 우선 해당 id 의 수상내역이 db에 존재하는지 여부 확인
-        let award = await Award.findById({ award_id });
+        let award = await Award.findById({ awardId });
 
         // db에서 찾지 못한 경우, 에러 메시지 반환
         if (!award) {
@@ -38,13 +38,13 @@ class awardService {
         if (toUpdate.awardName) {
             const fieldToUpdate = "awardName";
             const newValue = toUpdate.awardName;
-            award = await Award.update({ award_id, fieldToUpdate, newValue})
+            award = await Award.update({ awardId, fieldToUpdate, newValue})
         }
 
         if (toUpdate.awardDesc) {
             const fieldToUpdate = "awardDesc";
             const newValue = toUpdate.awardDesc;
-            award = await Award.update({ award_id, fieldToUpdate, newValue})
+            award = await Award.update({ awardId, fieldToUpdate, newValue})
         }
 
         return award;
