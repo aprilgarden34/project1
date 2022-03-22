@@ -6,8 +6,8 @@ class Award {
         return createdNewAward;
     }
 
-    static async findByName({ awardName }) {
-        const award = await AwardModel.findOne({ awardName });
+    static async findByUserIdAndName({ userId, awardName }) {
+        const award = await AwardModel.findOne({ $and: [{userId}, {awardName}] });
         return award;
     }
 
