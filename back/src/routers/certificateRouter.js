@@ -47,8 +47,8 @@ certificateRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      const certificate_id = req.params.id;
-      const currentCertificateInfo = await certificateService.getCertificateInfo({ certificate_id });
+      const certificateId = req.params.id;
+      const currentCertificateInfo = await certificateService.getCertificateInfo({ certificateId });
 
       if (currentCertificateInfo.errorMessage) {
         throw new Error(currentCertificateInfo.errorMessage);
@@ -68,7 +68,7 @@ certificateRouter.put(
   async function (req, res, next) {
     try {
       // URI로부터 자격증 id를 추출함.
-      const certificate_id = req.params.id;
+      const certificateId = req.params.id;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const certificateName = req.body.certificateName ?? null;
       const certificateDesc = req.body.certificateDesc ?? null;
@@ -77,7 +77,7 @@ certificateRouter.put(
       const toUpdate = { certificateName, certificateDesc, certificateDate };
 
       // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedCertificate = await certificateService.setCertificateInfo({ certificate_id, toUpdate });
+      const updatedCertificate = await certificateService.setCertificateInfo({ certificateId, toUpdate });
 
       if (updatedCertificate.errorMessage) {
         throw new Error(updatedCertificate.errorMessage);
