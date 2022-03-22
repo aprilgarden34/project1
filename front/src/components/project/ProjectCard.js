@@ -44,7 +44,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
                    projects.splice(index, 1)
                    const newProjects = [...projects]
                    setProjects(newProjects)        
-                   Api.delete("certificateList", project.id )      
+                   Api.delete("projectList", project.id )      
                   }
               }
         >삭제

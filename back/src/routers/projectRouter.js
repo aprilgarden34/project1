@@ -85,7 +85,7 @@ projectRouter.put(
 )
 
 projectRouter.get(
-    "/projectlist/:user_id",
+    "/projectList/:user_id",
     login_required, 
     async function(req, res, next) {
         try {

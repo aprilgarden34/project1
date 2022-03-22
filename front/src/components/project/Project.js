@@ -8,7 +8,7 @@ import ProjectEditForm from "./ProjectEditForm";
   나늬어 화면을 보여주는 컴퍼넌트이다.
 */
 
-function Project({portfolioOwnerId, project, projects, setProjects, isEditable }) {
+function Project({ portfolioOwnerId, project, projects, setProjects, isEditable }) {
   /*isEditing 값을 변경하여 편집모드와 메인화면 모드를 변경한다. 
     기본값은 false로 메인화면이 보여진다./ */ 
      
@@ -27,6 +27,7 @@ function Project({portfolioOwnerId, project, projects, setProjects, isEditable }
           projects={projects}
           project={project}
           isEditable={isEditable}
+          setProjects={setProjects}
           setIsEditing={setIsEditing}
         />
       )}
