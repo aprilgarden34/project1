@@ -113,24 +113,20 @@ certificateRouter.get(
   }
 );
 
-//----------------------------------delete 기능 라우터 추가  ----------------------------------//
-
+// 자격증 삭제
 certificateRouter.delete(
-  "/certificateList/:id",
+  "/certificates/:id",
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 자격증 id를 추출함.
-      const certificate_id = req.params.id;
-      
-      // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
-      const deletedCertificate = await certificateService.delCertificate({ certificate_id });
+      const certificateId = req.params.id;
+      const deletedCertificateList = await certificateService.deleteCertificateInfo({ certificateId });
 
-      if (deletedCertificate.errorMessage) {
-        throw new Error(deletedCertificate.errorMessage);
+      if (deletedCertificateList.errorMessage) {
+        throw new Error(deletedCertificateList.errorMessage);
       }
 
-      res.status(200).json(deletedCertificate);
+      res.status(200).send(deletedCertificateList);
     } catch (error) {
       next(error);
     }

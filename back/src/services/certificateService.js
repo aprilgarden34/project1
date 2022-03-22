@@ -78,24 +78,18 @@ class certificateService {
     return certificatesList;
   }
 
-//--------------------------------- 추가 사항 -----------------------------------------------//
+  static async deleteCertificateInfo({ certificateId }) {
+    const deletedcertificateList = await Certificate.delete({ certificateId });
 
-
-  static async delCertificate({ certificate_id }) {
-    
-    const deletedCertificateList = await Certificate.removeById({ certificate_id })
- 
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!deletedCertificateList) {
+    if (!deletedcertificateList) {
       const errorMessage = "해당 자격증은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage }
-  }
-    return deletedCertificateList
+    }
+    return deletedcertificateList;
   }
 
 }
-
-// ---------------------------------추가 사항  ------------------------------------------//
 
 
 export { certificateService };
