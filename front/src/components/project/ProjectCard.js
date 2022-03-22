@@ -4,12 +4,17 @@
   변경되도록 Project 컴퍼넌트에서 작동한다. 
 */
 
+import * as Api from "../../api";
+import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 
-function ProjectCard({ project, isEditable, setIsEditing }) {
+function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
+        <Col xs lg="1">
+          <div></div>
+        </Col>
         <Col>
           {project.projectName}
           <br />
@@ -21,15 +26,31 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
         </Col>
         {isEditable && (
           <Col xs lg="1">
-            <Button
+            <div className="d-grid gap-2">
+              <Button
+                variant="outline-info"
+                size="sm"
+                onClick={() => setIsEditing((prev) => !prev)}
+                className="mr-3"
+            >
+                편집
+              </Button>
+              <Button
               variant="outline-info"
               size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
               className="mr-3"
-            >
-              편집
-            </Button>
-          </Col>
+              onClick={() => {
+                   const index = projects.indexOf(project)              
+                   projects.splice(index, 1)
+                   const newProjects = [...projects]
+                   setProjects(newProjects)        
+                   Api.delete("certificateList", project.id )      
+                  }
+              }
+        >삭제
+        </Button>
+      </div>    
+    </Col>
         )}
       </Row>
     </Card.Text>
@@ -37,3 +58,5 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
 }
 
 export default ProjectCard;
+
+
