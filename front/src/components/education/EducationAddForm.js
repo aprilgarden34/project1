@@ -31,7 +31,7 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
       }  
     }
     
-    //추가 후 "educationlist/유저id" 엔드포인트로 get요청하여 받아옴
+    //추가 후 "education/유저id" 엔드포인트로 get요청하여 받아옴
     const res = await Api.get("education", portfolioOwnerId);
     //요청 실패시 error 반환
     if (!res) {

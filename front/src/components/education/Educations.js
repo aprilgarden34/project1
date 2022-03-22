@@ -11,7 +11,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
-    // "educationlist/유저id"로 GET 요청하고, response의 data로 educations를 세팅함.
+    // "education/유저id"로 GET 요청하고, response의 data로 educations를 세팅함.
     
     Api.get("education", portfolioOwnerId).then((res) =>
       setEducations(res.data)

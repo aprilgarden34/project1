@@ -27,7 +27,7 @@ function EducationEditForm({ portfolioOwnerId, currentEducation, setEducations, 
       console.log('post 요청이 실패했습니다.', err)
     }
 
-    // 수정 후 "educationlist/유저id" 엔드포인트로 GET 요청하여 받아옴
+    // 수정 후 "education/유저id" 엔드포인트로 GET 요청하여 받아옴
     // 에러처리 추가
     const res = await Api.get("education", portfolioOwnerId);
     //요청 실패시 error 반환
