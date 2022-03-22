@@ -38,7 +38,7 @@ class Project {
 
 
     static async removeById({ project_id }) {
-        const deletedProjectList = await CertificateModel.remove({id: project_id})
+        const deletedProjectList = await ProjectModel.remove({id: project_id})
         return deletedProjectList
   } 
 
