@@ -7,6 +7,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
   return (
     <Card.Text>
       <Row className="align-items-center">
+       {/* ------------------------------- Murter 관련 부분 ------------------------------ */}
         <Col xs lg="1">              
             <form action = "/certificateImage" method="POST"
               enctype = "multipart/form-data"                
@@ -19,6 +20,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
               <button type="submit">제출</button> 
             </ form>         
         </Col>
+      {/* ------------------------------- Murter 관련 부분 -------------------------------- */}
         <Col>    
           <div className="text-center"> 
             {certificate.certificateName}
