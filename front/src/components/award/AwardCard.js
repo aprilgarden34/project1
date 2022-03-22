@@ -5,7 +5,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 function AwardCard({ award, isEditable, setIsEditing }) {
   return (
     <Card.Text>
-      <Row className="align-items-center">햣
+      <Row className="align-items-center">
         <Col className="text-center mb-4">
           <span className= "mb-4">{award.awardName}</span>
           <span className="text-muted" style={{display: 'block'}}>{award.awardDesc}</span>
