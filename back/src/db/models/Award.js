@@ -33,6 +33,11 @@ class Award {
         );
         return updatedAward;
     }
+    
+    static async removeById({ awardId }) {
+        const deletedAwardtList = await AwardModel.remove({id: awardId})
+        return deletedAwardtList;
+    }
 }
 
 export { Award };
