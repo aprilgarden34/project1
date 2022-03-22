@@ -118,7 +118,7 @@ projectRouter.delete(
       const project_id = req.params.id;
       
       // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
-      const deletedProject = await projectService.delCertificate({ project_id });
+      const deletedProject = await projectService.delProject({ project_id });
 
       if (deletedProject.errorMessage) {
         throw new Error(deletedProject.errorMessage);
