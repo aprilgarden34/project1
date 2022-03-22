@@ -26,13 +26,24 @@ class Certificate {
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
+
     const updatedCertificate = await CertificateModel.findOneAndUpdate(
       filter,
       update,
       option
     );
+
+
     return updatedCertificate;
   }
+
+// ----------------- delete 기능 추가 ----------------------------------------
+
+
+  static async removeById({ certificate_id }) {
+    const deletedCertificateList = await CertificateModel.remove({id: certificate_id})
+    return deletedCertificateList
+  } 
 
 }
 

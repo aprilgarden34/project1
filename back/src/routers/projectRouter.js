@@ -85,7 +85,7 @@ projectRouter.put(
 )
 
 projectRouter.get(
-    "/projectlist/:user_id",
+    "/projectList/:user_id",
     login_required, 
     async function(req, res, next) {
         try {
@@ -105,5 +105,33 @@ projectRouter.get(
         }
     }
 );
+
+
+//----------------------------------delete 기능 라우터 추가  ----------------------------------//
+
+projectRouter.delete(
+  "/projectList/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      // URI로부터 자격증 id를 추출함.
+      const project_id = req.params.id;
+      
+      // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
+      const deletedProject = await projectService.delProject({ project_id });
+
+      if (deletedProject.errorMessage) {
+        throw new Error(deletedProject.errorMessage);
+      }
+
+      res.status(200).json(deletedProject);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//--------------------------------------------------------------------------------------------//
+
 
 export { projectRouter };
