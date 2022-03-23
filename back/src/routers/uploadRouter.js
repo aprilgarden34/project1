@@ -5,9 +5,9 @@ import { userAuthService } from "../services/userService";
 
 const uploadRouter = Router();
 
-// 파일 업로드 생성(저장)
+// 파일 업로드로 file 데이터 생성
 uploadRouter.post(
-  "/certificate/uploadfile",
+  "/upload",
   login_required, 
   upload,
   async function (req, res, next) {
@@ -21,11 +21,13 @@ uploadRouter.post(
       if (currentUserInfo.errorMessage) {
         throw new Error(currentUserInfo.errorMessage);
       }
+
+      // multer 미들웨어에서 에러 발생시 (파일 크기, 확장자 등)
       if (!req.file) {
         throw new Error("정상적인 이미지 파일이 아닙니다. 다시 확인해주세요.");
       }
 
-      res.status(200).json(req.file);
+      res.status(201).json(req.file);
 
     } catch (error) {
       next(error);
