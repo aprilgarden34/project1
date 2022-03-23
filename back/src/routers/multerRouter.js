@@ -1,10 +1,9 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
-import { append } from "express/lib/response";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
-const multer = require('multer')
+import path from "path";
+import multer from "multer";
 const multerRouter = Router();
 
 
@@ -26,14 +25,26 @@ const uploadCertificate = multer({ storage: certificateImageStorageEngine })
 
 
 /*multer Router, 중간에 미들웨어가 실행됨. */
-multerRouter.post("/certificateImage", uploadCertificate.single('certificateImage'), 
-  async function (req, res) {
-  
-  console.log(req.file)
-  const message ="자격증 사진이 업로드 되었습니다."
-  res.status(200).send(message)
-})
+multerRouter.post("/certificateImage", login_required, uploadCertificate.single('certificateImage'), 
+async function (req, res, next) {
+  try {
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const user_id = req.currentUserId;
+    const currentUserInfo = await userAuthService.getUserInfo({
+      user_id,
+    });
 
+    if (currentUserInfo.errorMessage) {
+      throw new Error(currentUserInfo.errorMessage);
+    }
+
+    res.status(200).json(req.file);
+
+  } catch (error) {
+    next(error);
+  }
+}
+);
 
 // Project image // --------------------------------------------------------------------
 
@@ -53,13 +64,23 @@ const uploadProject = multer({ storage: projectImageStorageEngine })
 
 
 /*multer Router, 중간에 미들웨어가 실행됨. */
-multerRouter.post("/projectImage", uploadProject.single('projectImage'), 
-  async function (req, res) {
-  
-  console.log(req.file)
-  const message = "프로젝트 사진이 업로드 되었습니다."
-  res.status(200).send(message)
-})
+multerRouter.post("/projectImage", login_required, uploadProject.single('projectImage'), 
+  async function (req, res, next) {
+    try {
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      const user_id = req.currentUserId;
+      const currentUserInfo = await userAuthService.getUserInfo({
+        user_id,
+      });
 
-export { multerRouter };
+      if (currentUserInfo.errorMessage) {
+        throw new Error(currentUserInfo.errorMessage);
+      }
 
+      res.status(200).json(req.file);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+);

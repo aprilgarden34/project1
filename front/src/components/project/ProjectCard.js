@@ -6,24 +6,20 @@
 
 import * as Api from "../../api";
 import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Form, Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
-        <Col xs lg="1">                   
-            <form action = "/projectImage" method="POST"
-              enctype = "multipart/form-data"                
-              onSubmit = {() => Api.post("projectImage", 
-              {
-                currentUserId: project.userId,
-                projectName: project.projectName,
-              })}>
-              <input type="file" name="projectImage" defaultValue="경로" />
-              <button type="submit">제출</button> 
-            </ form>           
+        {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
+        <Col xs lg="1">                                  
+          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>프로젝트 사진을 추가하세요</Form.Label>
+          <Form.Control type="file" />
+          </Form.Group>
         </Col>
+          {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col>
           {project.projectName}
           <br />

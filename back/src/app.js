@@ -40,11 +40,10 @@ app.use(certificateRouter);
 // Project API
 app.use(projectRouter);
 
-// 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
-app.use(errorMiddleware); 
-
-// 파일 업로드를 위한 multer router 구현
+// Multer Router
 app.use(multerRouter);
 
+// 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
+app.use(errorMiddleware); 
 
 export { app };

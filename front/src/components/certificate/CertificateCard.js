@@ -1,4 +1,4 @@
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Form ,Card, Button, Row, Col } from "react-bootstrap";
 import React from "react";
 import * as Api from "../../api";
 
@@ -9,16 +9,10 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
       <Row className="align-items-center">
        {/* ------------------------------- Murter 관련 부분 ------------------------------ */}
         <Col xs lg="1">              
-            <form action = "/certificateImage" method="POST"
-              enctype = "multipart/form-data"                
-              onSubmit = {() => Api.post("certificateImage", 
-              {
-                currentUserId: certificate.currentUserId,
-                certificateName: certificate.certificateName,
-              })}>
-              <input type="file" name="certificateImage" defaultValue="경로" />
-              <button type="submit">제출</button> 
-            </ form>         
+         <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>자격증 사진을 추가하세요</Form.Label>
+          <Form.Control type="file" />
+          </Form.Group>
         </Col>
       {/* ------------------------------- Murter 관련 부분 -------------------------------- */}
         <Col>    
@@ -65,17 +59,3 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
 export default CertificateCard;
 
 
-// async function post(endpoint, data) {
-//   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-//   // 예시: {name: "Kim"} => {"name": "Kim"}
-//   const bodyData = JSON.stringify(data);
-//   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
-//   console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
-
-//   return axios.post(serverUrl + endpoint, bodyData, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-//     },
-//   });
-// }
