@@ -77,7 +77,7 @@ educationRouter.put("/educations/:id", async (req, res, next) => {
   }
 });
 
-educationRouter.delete("/education/:id", async (req, res, next) => {
+educationRouter.delete("/educations/:id", async (req, res, next) => {
     const id = req.params.id;
     const deleteEducaiton = await educationService.deleteEducation({
       id,
