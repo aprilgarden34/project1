@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 class awardService {
     static async addAward({ userId, awardName, awardDesc }) {
-        const award = await Award.findByName({ awardName });        // 수상 내역 중복 검사
+        // 수상 내역 중복 검사
+        const award = await Award.findByUserIdAndName({ userId, awardName });        
         if ( award ) {
             const errorMessage = "이미 존재하는 수상내역입니다. 다른 수상내역을 입력해 주세요.";
             return { errorMessage };
@@ -18,14 +19,14 @@ class awardService {
         return createdNewAward;
     }
 
-    static async getAwardInfo({ award_id }) {
-        const award = await Award.findById({ award_id });
+    static async getAwardInfo({ awardId }) {
+        const award = await Award.findById({ awardId });
         return award;
     }
 
-    static async setAward({ award_id, toUpdate }) {
+    static async setAward({ awardId, toUpdate }) {
         // 우선 해당 id 의 수상내역이 db에 존재하는지 여부 확인
-        let award = await Award.findById({ award_id });
+        let award = await Award.findById({ awardId });
 
         // db에서 찾지 못한 경우, 에러 메시지 반환
         if (!award) {
@@ -38,13 +39,13 @@ class awardService {
         if (toUpdate.awardName) {
             const fieldToUpdate = "awardName";
             const newValue = toUpdate.awardName;
-            award = await Award.update({ award_id, fieldToUpdate, newValue})
+            award = await Award.update({ awardId, fieldToUpdate, newValue})
         }
 
         if (toUpdate.awardDesc) {
             const fieldToUpdate = "awardDesc";
             const newValue = toUpdate.awardDesc;
-            award = await Award.update({ award_id, fieldToUpdate, newValue})
+            award = await Award.update({ awardId, fieldToUpdate, newValue})
         }
 
         return award;
@@ -54,6 +55,16 @@ class awardService {
         const awardsList = await Award.findByUserId({ userId });
         return awardsList;
     }
+
+    static async delAward({ awardId }) {
+        const deletedAwardList = await Award.removeById({ awardId })
+        // db에서 찾지 못한 경우, 에러 메시지 반환
+        if (!deletedAwardList) {
+          const errorMessage = "해당 프로젝트는 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+          return { errorMessage }
+        }
+      return deletedAwardList;
+      }
 }
 
 export { awardService }
