@@ -63,7 +63,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
           <Col xs lg="1">
             <div className="d-grid gap-2">
             <Button
-              variant="outline-info"
+              variant="outline-primary"
               size="sm"
               onClick={() => setIsEditing(true)}
               className="mr-3"
@@ -71,7 +71,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
               편집             
             </Button>
             <Button
-              variant="outline-info"
+              variant="outline-danger"
               size="sm"
               onClick={DeleleteHandler}
               className="mr-3"
