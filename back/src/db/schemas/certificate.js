@@ -18,6 +18,11 @@ const CertificateSchema = new Schema(
       type: String,
       required: true,
     },
+    // ----- 파일 업로드 : 저장경로 필드 생성
+    filePath : {
+      type: String,
+    },
+    // --------------------------------------
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

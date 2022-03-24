@@ -21,8 +21,8 @@ const [projectImage, setProjectsImage] = useState(null)
             e.preventDefault()
             const formData = new FormData()
             formData.append('file', projectImage)  
-            Api.formPost("project/image", formData 
-           )}}>
+            // Api.formPost("project/image", formData )
+           }}>
 
           <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>사진 추가</Form.Label>
