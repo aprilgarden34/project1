@@ -19,7 +19,7 @@ const upload =  multer({
         fileFilter: function (req, file, cb) {
           const typed = String(file.mimetype)?.split("/")[0] ?? "null"
           if (typed !== 'image') {
-            return cb(null, false, new Error('goes wrong on the mimetype'));
+            return cb(null, false, new Error('error'));
           }
           cb(null, true);
         },

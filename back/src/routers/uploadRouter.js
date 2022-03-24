@@ -7,7 +7,7 @@ const uploadRouter = Router();
 
 // 파일 업로드로 file 데이터 생성
 uploadRouter.post(
-  "/upload",
+  "certificate/upload",
   login_required, 
   upload,
   async function (req, res, next) {
@@ -23,12 +23,15 @@ uploadRouter.post(
       }
 
       // multer 미들웨어에서 에러 발생시 (파일 크기, 확장자 등)
-      if (!req.file) {
-        throw new Error("정상적인 이미지 파일이 아닙니다. 다시 확인해주세요.");
+      const fileData = req.file;
+      if(fileData === undefined) {
+        return res.status(202).json({
+          error: false,
+        }); 
+      } else {
+        res.status(200).json(req.file)
       }
-
-      res.status(201).json(req.file);
-
+  
     } catch (error) {
       next(error);
     }
