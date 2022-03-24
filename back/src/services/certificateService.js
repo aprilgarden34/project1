@@ -89,6 +89,26 @@ class certificateService {
     return deletedcertificateList;
   }
 
+
+  // ----------------- 파일 경로 추가 저장 -------------------------
+  static async addFileInfo({ certificateId, filePath }) {
+    // 자격증 존재 확인
+    const certificate = await Certificate.findById({ certificateId });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!certificate) {
+      const errorMessage = "해당 자격증은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage }
+    }
+
+    // db의 filepath만 추가저장
+    const addedCertificateFile = await Certificate.addFileById({ certificateId, filePath });
+    addedCertificateFile.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    return addedCertificateFile;
+    
+  }
+  // ----------------- 파일 경로 추가 저장 -------------------------
+
 }
 
 
