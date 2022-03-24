@@ -39,14 +39,14 @@ const [certificateImage, setCertificateImage] = useState(null)
             <Col xs lg="1">
               <div className="d-grid gap-2">
                 <Button
-                  variant="outline-info"
+                  variant="outline-primary" 
                   size="sm"
                   onClick={() => setIsEditing((prev) => !prev)} //editing 모드를 편집상태로 전환!
                   className="mr-3"
                 >편집
                 </Button>
                 <Button
-                  variant="outline-info"
+                  variant="outline-danger"
                   size="sm"
                   className="mr-3"
                   onClick={() => {

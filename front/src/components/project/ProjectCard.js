@@ -45,7 +45,7 @@ const [projectImage, setProjectsImage] = useState(null)
           <Col xs lg="1">
             <div className="d-grid gap-2">
               <Button
-                variant="outline-info"
+                variant="outline-primary" 
                 size="sm"
                 onClick={() => setIsEditing((prev) => !prev)}
                 className="mr-3"
@@ -53,7 +53,7 @@ const [projectImage, setProjectsImage] = useState(null)
                 편집
               </Button>
               <Button
-              variant="outline-info"
+              variant="outline-danger"
               size="sm"
               className="mr-3"
               onClick={() => {
