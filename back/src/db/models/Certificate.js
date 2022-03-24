@@ -6,13 +6,13 @@ class Certificate {
     return createdNewCertificate;
   }
 
-  static async findByName({ certificateName }) {
-    const certificate = await CertificateModel.findOne({ certificateName });
+  static async findByUserIdAndName({ userId, certificateName }) {
+    const certificate = await CertificateModel.findOne({$and: [{userId}, {certificateName}] });
     return certificate;
   }
 
-  static async findById({ certificate_id }) {
-    const certificate = await CertificateModel.findOne({ id: certificate_id });
+  static async findById({ certificateId }) {
+    const certificate = await CertificateModel.findOne({ id: certificateId });
     return certificate;
   }
 
@@ -21,11 +21,10 @@ class Certificate {
     return certificatesList;
   }
 
-  static async update({ certificate_id, fieldToUpdate, newValue }) {
-    const filter = { id: certificate_id };
+  static async update({ certificateId, fieldToUpdate, newValue }) {
+    const filter = { id: certificateId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
-
 
     const updatedCertificate = await CertificateModel.findOneAndUpdate(
       filter,
@@ -33,18 +32,13 @@ class Certificate {
       option
     );
 
-
     return updatedCertificate;
   }
 
-// ----------------- delete 기능 추가 ----------------------------------------
-
-
-  static async removeById({ certificate_id }) {
-    const deletedCertificateList = await CertificateModel.remove({id: certificate_id})
-    return deletedCertificateList
-  } 
-
+  static async delete({ certificateId }) {
+    const deletedCertificateList = await CertificateModel.deleteOne({ id: certificateId });
+    return deletedCertificateList;
+  }
 }
 
 export { Certificate };

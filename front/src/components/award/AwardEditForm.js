@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function AwardEditForm({ portfolioOwnerId,  currentAward, setAwards, setIsEditing }) {
+function AwardEditForm({ portfolioOwnerId, currentAward, setAwards, setIsEditing }) {
   //awardName 상태를 생성
   const [awardName, setAwardName] = useState(currentAward.awardName);
   //awardDesc 상태를 생성
@@ -10,19 +10,25 @@ function AwardEditForm({ portfolioOwnerId,  currentAward, setAwards, setIsEditin
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // currentAward의 user_id를 user_id 변수에 할당
-    const user_id = portfolioOwnerId;
+    
 
     // 수정한 내용을 "awards/수상 id" 엔드포인트로 PUT 요청
-    await Api.put(`awards/${currentAward.id}`, {
-      user_id,
+    // 에러처리 추가
+    try { 
+      await Api.put(`awards/${currentAward.id}`, {
+      portfolioOwnerId,
       awardName,
       awardDesc,
-    });
+    });} catch (err) {
+      console.log('post 요청이 실패했습니다.', err)
+    }
 
     // 수정후 "awardlist/유저id" 엔드포인트로 GET 요청하여 다시 받아옴.
-    const res = await Api.get("awardlist", user_id);
+    // 에러처리 추가
+    const res = await Api.get("awardlist", portfolioOwnerId);
+    if (!res) {
+      console.log('get 요청이 실패했습니다')
+    }
     // awards를 response의 data로 세팅함.
     setAwards(res.data);
     // 편집완료(추가끝남) isEditing을 false로 바꿔줌
@@ -31,7 +37,7 @@ function AwardEditForm({ portfolioOwnerId,  currentAward, setAwards, setIsEditin
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="awardEditAwardName">
+      <Form.Group >
         <Form.Control
           type="text"
           placeholder="수상내역"
@@ -40,7 +46,7 @@ function AwardEditForm({ portfolioOwnerId,  currentAward, setAwards, setIsEditin
         />
       </Form.Group>
 
-      <Form.Group controlId="awardEditAwardDesc" className="mt-3">
+      <Form.Group className="mt-3">
         <Form.Control
           type="text"
           placeholder="상세내역"

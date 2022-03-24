@@ -6,13 +6,13 @@ class Project {
         return createdNewproject;
     }
 
-    static async findByName({ projectName }) {
-        const project = await ProjectModel.findOne({ projectName });
+    static async findByUserIdAndName({ userId, projectName }) {
+        const project = await ProjectModel.findOne({ $and: [{userId}, {projectName}] });
         return project;
     }
 
-    static async findById({ project_id }) {
-        const project = await ProjectModel.findOne({ id: project_id });
+    static async findById({ projectId }) {
+        const project = await ProjectModel.findOne({ id: projectId });
         return project;
     }
 
@@ -21,8 +21,8 @@ class Project {
         return projectList;
     }
 
-    static async update({ project_id, fieldToUpdate, newValue }) {
-        const filter = { id: project_id };
+    static async update({ projectId, fieldToUpdate, newValue }) {
+        const filter = { id: projectId };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
     
@@ -37,8 +37,8 @@ class Project {
 // ----------------- delete 기능 추가 ----------------------------------------
 
 
-    static async removeById({ project_id }) {
-        const deletedProjectList = await ProjectModel.remove({id: project_id})
+    static async removeById({ projectId }) {
+        const deletedProjectList = await ProjectModel.remove({id: projectId})
         return deletedProjectList
   } 
 

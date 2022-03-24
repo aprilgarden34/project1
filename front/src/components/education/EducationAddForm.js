@@ -121,3 +121,4 @@ function EducationAddForm({ portfolioOwnerId, setEducations, setIsAdding }) {
 }
 
 export default EducationAddForm;
+

@@ -20,9 +20,7 @@ certificateRouter.post("/certificate/create", login_required, async function (re
     }
 
     // req (request) 에서 데이터 가져오기
-    const certificateName = req.body.certificateName;
-    const certificateDesc = req.body.certificateDesc;
-    const certificateDate = req.body.certificateDate;
+    const { certificateName, certificateDesc, certificateDate} = req.body;
     const userId = currentUserInfo._id;
 
     // 위 데이터를 자격증 db에 추가하기
@@ -49,8 +47,8 @@ certificateRouter.get(
   login_required,
   async function (req, res, next) {
     try {
-      const certificate_id = req.params.id;
-      const currentCertificateInfo = await certificateService.getCertificateInfo({ certificate_id });
+      const certificateId = req.params.id;
+      const currentCertificateInfo = await certificateService.getCertificateInfo({ certificateId });
 
       if (currentCertificateInfo.errorMessage) {
         throw new Error(currentCertificateInfo.errorMessage);
@@ -70,7 +68,7 @@ certificateRouter.put(
   async function (req, res, next) {
     try {
       // URI로부터 자격증 id를 추출함.
-      const certificate_id = req.params.id;
+      const certificateId = req.params.id;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const certificateName = req.body.certificateName ?? null;
       const certificateDesc = req.body.certificateDesc ?? null;
@@ -79,7 +77,7 @@ certificateRouter.put(
       const toUpdate = { certificateName, certificateDesc, certificateDate };
 
       // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedCertificate = await certificateService.setCertificateInfo({ certificate_id, toUpdate });
+      const updatedCertificate = await certificateService.setCertificateInfo({ certificateId, toUpdate });
 
       if (updatedCertificate.errorMessage) {
         throw new Error(updatedCertificate.errorMessage);
@@ -115,24 +113,20 @@ certificateRouter.get(
   }
 );
 
-//----------------------------------delete 기능 라우터 추가  ----------------------------------//
-
+// 자격증 삭제
 certificateRouter.delete(
-  "/certificateList/:id",
+  "/certificates/:id",
   login_required,
   async function (req, res, next) {
     try {
-      // URI로부터 자격증 id를 추출함.
-      const certificate_id = req.params.id;
-      
-      // 해당 자격증 아이디로 자격증 정보를 db에서 찾아 삭제함.
-      const deletedCertificate = await certificateService.delCertificate({ certificate_id });
+      const certificateId = req.params.id;
+      const deletedCertificateList = await certificateService.deleteCertificateInfo({ certificateId });
 
-      if (deletedCertificate.errorMessage) {
-        throw new Error(deletedCertificate.errorMessage);
+      if (deletedCertificateList.errorMessage) {
+        throw new Error(deletedCertificateList.errorMessage);
       }
 
-      res.status(200).json(deletedCertificate);
+      res.status(200).send(deletedCertificateList);
     } catch (error) {
       next(error);
     }

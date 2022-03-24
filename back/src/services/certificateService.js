@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 class certificateService {
   static async addCertificate({ certificateName, certificateDesc, certificateDate, userId  }) {
     // 자격증 중복 확인
-    const certificate = await Certificate.findByName({ certificateName });
+    const certificate = await Certificate.findByUserIdAndName({ userId, certificateName });
     if (certificate) {
       const errorMessage =
         "이미 등록된 자격증입니다. 다른 자격증을 입력해 주세요.";
@@ -22,8 +22,8 @@ class certificateService {
     return createdNewCertificate;
   }
 
-  static async getCertificateInfo({ certificate_id }) {
-    const certificate = await Certificate.findById({ certificate_id });
+  static async getCertificateInfo({ certificateId }) {
+    const certificate = await Certificate.findById({ certificateId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
@@ -33,9 +33,9 @@ class certificateService {
     return certificate;
   }
 
-  static async setCertificateInfo({ certificate_id, toUpdate }) {
+  static async setCertificateInfo({ certificateId, toUpdate }) {
     // 우선 해당 id 의 자격증이 db에 존재하는지 여부 확인
-    let certificate = await Certificate.findById({ certificate_id });
+    let certificate = await Certificate.findById({ certificateId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
@@ -48,19 +48,19 @@ class certificateService {
     if (toUpdate.certificateName) {
       const fieldToUpdate = "certificateName";
       const newValue = toUpdate.certificateName;
-      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.certificateDesc) {
       const fieldToUpdate = "certificateDesc";
       const newValue = toUpdate.certificateDesc;
-      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.certificateDate) {
       const fieldToUpdate = "certificateDate";
       const newValue = toUpdate.certificateDate;
-      certificate = await Certificate.update({ certificate_id, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
     }
 
     return certificate;
@@ -78,24 +78,18 @@ class certificateService {
     return certificatesList;
   }
 
-//--------------------------------- 추가 사항 -----------------------------------------------//
+  static async deleteCertificateInfo({ certificateId }) {
+    const deletedcertificateList = await Certificate.delete({ certificateId });
 
-
-  static async delCertificate({ certificate_id }) {
-    
-    const deletedCertificateList = await Certificate.removeById({ certificate_id })
- 
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!deletedCertificateList) {
+    if (!deletedcertificateList) {
       const errorMessage = "해당 자격증은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage }
-  }
-    return deletedCertificateList
+    }
+    return deletedcertificateList;
   }
 
 }
-
-// ---------------------------------추가 사항  ------------------------------------------//
 
 
 export { certificateService };

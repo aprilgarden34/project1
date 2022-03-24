@@ -11,18 +11,28 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // portfolioOwnerId를 user_id 변수에 할당함.
-    const user_id = portfolioOwnerId;
-
     // 추가해주기위해 "award/create" 엔드포인트로 post요청함.
-    await Api.post("award/create", {
-      user_id: portfolioOwnerId,
-      awardName,
-      awardDesc,
-    });
+    // api 에러 핸들링 추가: awardName과 awardDesc 중 하나라도 공란일 경우
+    if (awardName && awardDesc == null) {
+      console.log('수상명과 수상내역을 입력해주세요.')
+    } else{
+      try {
+        await Api.post("award/create", {
+        portfolioOwnerId,
+        awardName,
+        awardDesc,
+      });
+      } catch (err) {
+        console.log('post 요청시 에러가 발생했습니다.', err);
+      }
+    }    
 
     // 추가해줬으니 다시 "awardlist/유저id" 엔드포인트로 get요청함.
-    const res = await Api.get("awardlist", user_id);
+    const res = await Api.get("awardlist", portfolioOwnerId);
+    //요청 실패시 error 반환
+    if (!res) {
+      console.log('get 요청시 에러가 발생했습니다.')
+    }
     // awards를 response의 data로 세팅.
     setAwards(res.data);
     // isAdding을 false로 세팅함.(편집이 끝남)
@@ -31,7 +41,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="awardAddAwardName">
+      <Form.Group >
         <Form.Control
           type="text"
           placeholder="수상내역"
@@ -40,7 +50,7 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
         />
       </Form.Group>
 
-      <Form.Group controlId="awardAddAwardDesc" className="mt-3">
+      <Form.Group className="mt-3">
         <Form.Control
           type="text"
           placeholder="상세내역"

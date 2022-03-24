@@ -54,7 +54,7 @@ const [certificateImage, setCertificateImage] = useState(null)
                                  certificates.splice(index, 1)
                                  const newCertificates = [...certificates]
                                  setCertificates(newCertificates)        
-                                 Api.delete("certificateList", certificate.id )      
+                                 Api.delete("certificates", certificate.id )      
                                 }
                             }
                   >삭제
