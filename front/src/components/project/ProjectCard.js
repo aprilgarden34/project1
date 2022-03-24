@@ -5,16 +5,33 @@
 */
 
 import * as Api from "../../api";
-import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import React, {useState} from "react";
+import { Form, Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
+  
+const [projectImage, setProjectsImage] = useState(null)
+  
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
-        <Col xs lg="1">
-          <div></div>
+        {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
+        <Col xs lg="1">                                  
+          <Form onSubmit= {(e) => { 
+            e.preventDefault()
+            const formData = new FormData()
+            formData.append('file', projectImage)  
+            Api.formPost("project/image", formData 
+           )}}>
+
+          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>사진 추가</Form.Label>
+          <Form.Control type="file" onChange={(e)=> setProjectsImage(e.target.files[0])} />
+          <Form.Control type="submit"/>
+          </Form.Group>
+          </Form>
         </Col>
+          {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col>
           {project.projectName}
           <br />
@@ -28,15 +45,15 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
           <Col xs lg="1">
             <div className="d-grid gap-2">
               <Button
-                variant="outline-info"
+                variant="outline-primary" 
                 size="sm"
                 onClick={() => setIsEditing((prev) => !prev)}
                 className="mr-3"
-            >
+              >
                 편집
               </Button>
               <Button
-              variant="outline-info"
+              variant="outline-danger"
               size="sm"
               className="mr-3"
               onClick={() => {
