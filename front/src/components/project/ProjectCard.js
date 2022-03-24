@@ -25,7 +25,7 @@ const [projectImage, setProjectsImage] = useState(null)
            )}}>
 
           <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>프로젝트 사진 추가</Form.Label>
+          <Form.Label>사진 추가</Form.Label>
           <Form.Control type="file" onChange={(e)=> setProjectsImage(e.target.files[0])} />
           <Form.Control type="submit"/>
           </Form.Group>

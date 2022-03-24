@@ -19,7 +19,7 @@ const [certificateImage, setCertificateImage] = useState(null)
            }}>
              
            <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>자격증 사진 추가</Form.Label>
+            <Form.Label>사진 추가</Form.Label>
             <Form.Control type="file" name="image" onChange={(e) => setCertificateImage(e.target.files[0])} />
             <Form.Control type="submit" />
             </Form.Group>
