@@ -2,7 +2,6 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 
-import path from "path";
 import multer from "multer";
 const multerRouter = Router();
 
@@ -13,10 +12,10 @@ const multerRouter = Router();
 /*multer engine, 업로드되는 파일 이름, 업로드되는 장소 선택 */
 const certificateImageStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../images/certificate' )
+    cb(null, 'uploads/certificate' )
   },
-  filename: (req, res, cb) => {
-    cb(null, 'Certificate' + '_' + req.body.currentUserId + '_' + req.body.certificateName + '_' + file.originalname )
+  filename: (req, file, cb) => {
+    cb(null, file.originalname )
   },
 })
 
@@ -25,7 +24,7 @@ const uploadCertificate = multer({ storage: certificateImageStorageEngine })
 
 
 /*multer Router, 중간에 미들웨어가 실행됨. */
-multerRouter.post("/certificateImage", login_required, uploadCertificate.single('certificateImage'), 
+multerRouter.post("/certificate/image", login_required, uploadCertificate.single('file'), 
 async function (req, res, next) {
   try {
     // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
@@ -38,13 +37,15 @@ async function (req, res, next) {
       throw new Error(currentUserInfo.errorMessage);
     }
 
-    res.status(200).json(req.file);
+      res.status(200).json(req.file);
 
-  } catch (error) {
-    next(error);
+    } catch (error) {
+      next(error);
   }
 }
 );
+
+
 
 // Project image // --------------------------------------------------------------------
 
@@ -52,10 +53,10 @@ async function (req, res, next) {
 /*multer engine, 업로드되는 파일 이름, 업로드되는 장소 선택 */
 const projectImageStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../images/project' )
+    cb(null, 'uploads/project' )
   },
-  filename: (req, res, cb) => {
-    cb(null, 'Project' + '_' + req.body.currentUserId + '_' + req.body.projectName + '_' + file.originalname)
+  filename: (req, file, cb) => {
+    cb(null, file.originalname )
   },
 })
 
@@ -64,7 +65,7 @@ const uploadProject = multer({ storage: projectImageStorageEngine })
 
 
 /*multer Router, 중간에 미들웨어가 실행됨. */
-multerRouter.post("/projectImage", login_required, uploadProject.single('projectImage'), 
+multerRouter.post("/project/image", login_required, uploadProject.single('file'), 
   async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
@@ -84,3 +85,6 @@ multerRouter.post("/projectImage", login_required, uploadProject.single('project
     }
   }
 );
+
+
+export { multerRouter };

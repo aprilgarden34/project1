@@ -1,18 +1,29 @@
 import { Form ,Card, Button, Row, Col } from "react-bootstrap";
-import React from "react";
+import React, {useState} from "react";
 import * as Api from "../../api";
 
 function CertificateCard({ certificates, setCertificates, certificate, isEditable, setIsEditing }) {
+
+const [certificateImage, setCertificateImage] = useState(null)
 
   return (
     <Card.Text>
       <Row className="align-items-center">
        {/* ------------------------------- Murter 관련 부분 ------------------------------ */}
         <Col xs lg="1">              
-         <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>자격증 사진을 추가하세요</Form.Label>
-          <Form.Control type="file" />
-          </Form.Group>
+         <Form onSubmit= {(e) => {
+           e.preventDefault()
+           const formData = new FormData()
+           formData.append('file', certificateImage)
+           Api.formPost("certificate/image", formData) 
+           }}>
+             
+           <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>자격증 사진 추가</Form.Label>
+            <Form.Control type="file" name="image" onChange={(e) => setCertificateImage(e.target.files[0])} />
+            <Form.Control type="submit" />
+            </Form.Group>
+         </Form>
         </Col>
       {/* ------------------------------- Murter 관련 부분 -------------------------------- */}
         <Col>    

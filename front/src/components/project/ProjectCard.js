@@ -5,19 +5,31 @@
 */
 
 import * as Api from "../../api";
-import React from "react";
+import React, {useState} from "react";
 import { Form, Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
+  
+const [projectImage, setProjectsImage] = useState(null)
+  
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
         {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col xs lg="1">                                  
+          <Form onSubmit= {(e) => { 
+            e.preventDefault()
+            const formData = new FormData()
+            formData.append('file', projectImage)  
+            Api.formPost("project/image", formData 
+           )}}>
+
           <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>프로젝트 사진을 추가하세요</Form.Label>
-          <Form.Control type="file" />
+          <Form.Label>프로젝트 사진 추가</Form.Label>
+          <Form.Control type="file" onChange={(e)=> setProjectsImage(e.target.files[0])} />
+          <Form.Control type="submit"/>
           </Form.Group>
+          </Form>
         </Col>
           {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col>

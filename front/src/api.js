@@ -59,6 +59,23 @@ async function del(endpoint, params = "") {
   });
 }
 
+// 사진파일 추가를 위한 formPost Api를 하나 만듬. 
+
+async function formPost(endpoint, formData) {
+
+  console.log(`%cPOST 요청: ${serverUrl + endpoint}로 사진 데이터를 전송합니다.`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${formData}`, "color: #296aba;");
+
+  return axios.post(serverUrl + endpoint, formData, {
+    headers: {
+      'content-type': 'multipart/form-data',
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`, 
+    }
+  })
+}
+
+
+
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, del as delete };
+export { formPost, get, post, put, del as delete };
