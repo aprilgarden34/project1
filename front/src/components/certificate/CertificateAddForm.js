@@ -39,38 +39,9 @@ function CertificateAddForm({
 
   };
 
-  //  -------- 파일 업로드; 데이터 세팅 ---------------
-
-  const handleChange = async (e) => {
-
-    e.preventDefault();
-
-    // files 데이터 전달할 formData 생성
-    const formData = new FormData();
-
-    // UI에서 받은 files 데이터를 formData에 file 필드로 저장
-    const uploadFile = e.target.files[0];
-    formData.append("file", uploadFile);
-
-    // 백엔드의 'certificate/uploadfile' URI로 formPost 요청 (참고. app.js 의 formPost)
-    const res = await Api.formPost("upload", formData);
-
-    if (res.data) {
-      const fileInfo = {
-        filePath: res.data.path,
-        fileName: res.data.filename
-      }
-      console.log('백엔드에 저장된 데이터: ',fileInfo);
-      
-      alert('백엔드에 이미지 파일이 저장되었습니다!')
-    }
-
-  };
-
-  // ----------------------------------------- 
 
   return (
-    <Form onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: 'flex' }}>
+    <Form onSubmit={handleSubmit}>
 
       <Form.Group controlId="certificateAddTitle" className="mt-3">
         <Form.Control
@@ -98,17 +69,6 @@ function CertificateAddForm({
           />
         </Col>
       </Form.Group>
-
-    {/* // 파일 업로드  */}
-      <Form.Group controlId="formFileSm" className="mt-3">
-        <Form.Control 
-          type="file" 
-          size="sm"
-          name="photo"
-          onChange={handleChange}
-          />
-      </Form.Group>
-    {/* // 파일 업로드  */}
 
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
