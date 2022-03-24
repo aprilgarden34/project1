@@ -39,6 +39,26 @@ class Certificate {
     const deletedCertificateList = await CertificateModel.deleteOne({ id: certificateId });
     return deletedCertificateList;
   }
+
+  // -------  파일 경로 값만 저장 -----------------
+
+  static async addFileById({ certificateId, filePath }) {
+    const filter = { id: certificateId };
+    const update = { filePath: filePath };
+    const option = { new: true };
+    // const option = { returnOriginal: false };
+
+    const addFileCertificate = await CertificateModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+
+    return addFileCertificate;
+  }
+
+  // -------  파일 경로 값만 저장 -----------------
+
 }
 
 export { Certificate };

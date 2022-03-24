@@ -28,16 +28,16 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
        
     const formData = new FormData();
     formData.append("file", awardImage);
-    const res = await Api.formPost("award/image", formData);
+    // const res = await Api.formPost("award/image", formData);
 
-    if (res.data) {
-      const fileInfo = {
-        filePath: res.data.path,
-        fileName: res.data.filename
-      }
-      console.log('백엔드에 저장된 데이터: ',fileInfo);      
-      alert('백엔드에 이미지 파일이 저장되었습니다!')
-    }
+    // if (res.data) {
+    //   const fileInfo = {
+    //     filePath: res.data.path,
+    //     fileName: res.data.filename
+    //   }
+    //   console.log('백엔드에 저장된 데이터: ',fileInfo);      
+    //   alert('백엔드에 이미지 파일이 저장되었습니다!')
+    // }
   };
 
   return (
