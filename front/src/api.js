@@ -59,6 +59,46 @@ async function del(endpoint, params = "") {
   });
 }
 
+
+// -------- 프론트엔드 파일 업로드용 formData API ------- 
+
+async function filePost(endpoint, data) {
+  
+  // bodyData는 formData 객체 형태
+  const bodyData = data;
+  console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+  // 파일 업로드는 JSON이 불가능하여, 모든 데이터를 formData로 전달
+  return axios.post(serverUrl + endpoint, bodyData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+
+// 기존 데이터를 유지하면서 파일만 저장해야 하기 때문에 PATCH 사용
+async function patch(endpoint, data) {
+  
+  // bodyData는 formData 객체 형태
+  const bodyData = data;
+  console.log(`%cPATCH 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  console.log(`%cPATCH 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+  // 파일 업로드는 JSON이 불가능하여, 모든 데이터를 formData로 전달
+  return axios.patch(serverUrl + endpoint, bodyData, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+// -----------------------------------------
+
+
+
+
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, del as delete };
+export { get, post, put, del as delete, filePost, patch }; // --------- formPost, patch 추가

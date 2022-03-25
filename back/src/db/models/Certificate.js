@@ -6,13 +6,13 @@ class Certificate {
     return createdNewCertificate;
   }
 
-  static async findByName({ certificateName }) {
-    const certificate = await CertificateModel.findOne({ certificateName });
+  static async findByUserIdAndName({ userId, certificateName }) {
+    const certificate = await CertificateModel.findOne({$and: [{userId}, {certificateName}] });
     return certificate;
   }
 
-  static async findById({ certificate_id }) {
-    const certificate = await CertificateModel.findOne({ id: certificate_id });
+  static async findById({ certificateId }) {
+    const certificate = await CertificateModel.findOne({ id: certificateId });
     return certificate;
   }
 
@@ -21,8 +21,8 @@ class Certificate {
     return certificatesList;
   }
 
-  static async update({ certificate_id, fieldToUpdate, newValue }) {
-    const filter = { id: certificate_id };
+  static async update({ certificateId, fieldToUpdate, newValue }) {
+    const filter = { id: certificateId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -31,8 +31,33 @@ class Certificate {
       update,
       option
     );
+
     return updatedCertificate;
   }
+
+  static async delete({ certificateId }) {
+    const deletedCertificateList = await CertificateModel.deleteOne({ id: certificateId });
+    return deletedCertificateList;
+  }
+
+  // -------  파일 경로 값만 저장 -----------------
+
+  static async addFileById({ certificateId, filePath }) {
+    const filter = { id: certificateId };
+    const update = { filePath: filePath };
+    const option = { new: true };
+    // const option = { returnOriginal: false };
+
+    const addFileCertificate = await CertificateModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+
+    return addFileCertificate;
+  }
+
+  // -------  파일 경로 값만 저장 -----------------
 
 }
 
