@@ -125,10 +125,25 @@ class userAuthService {
 
     return user;
   }
+  
   static async removeUser({user_id}){
     const user = await User.delete({ user_id });
     
     return user;
+
+  }
+
+  // 이메일 중복 확인 emailVaild
+  static async emailVaild({ email }) {
+  
+    const user = await User.findByEmail({ email });
+    if (user) {
+      const errorMessage =
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
+      return { errorMessage };
+    }
+      const userEmail = { email : email };
+      return userEmail;
   }
 }
 
