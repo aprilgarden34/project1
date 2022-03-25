@@ -4,9 +4,16 @@ import * as Api from "../../api";
 
 function CertificateCard({ certificates, setCertificates, certificate, isEditable, setIsEditing }) {
 
-const [certificateImage, setCertificateImage] = useState(null)
-
  //  ----------------------------------- 파일 업로드 ----------------------------------------
+
+ // ~~~~~~ 파일명 조회 ~~~~~~~~~ 
+ const filePath = certificate.filePath
+ console.log(filePath, filePath.indexOf('_'));
+ const imageName = certificate.filePath.split('_')[1];
+
+ const [certificateImage, setCertificateImage] = useState(imageName)
+
+ // ~~~~~~~ 파일명 조회 ~~~~~~~~~
 
  const [certificateFilePath, setCertificateFilePath] = useState(null);
 
@@ -27,6 +34,10 @@ const [certificateImage, setCertificateImage] = useState(null)
    
    console.log('저장된 값은 과연 ', res.data);
    alert('백엔드에 이미지 파일이 저장되었습니다!')
+
+   // ~~~~~~ 파일명 조회 ~~~~~~~~~
+   setCertificateImage(res.data.filePath.split('_')[1]);
+   // ~~~~~~ 파일명 조회 ~~~~~~~~~
 
  };
 
@@ -84,7 +95,12 @@ const [certificateImage, setCertificateImage] = useState(null)
             <br />
             <span className="text-muted">{certificate.certificateDesc}</span>
             <br />
-            <span className="text-muted">{certificate.certificateDate}</span>    
+            <span className="text-muted">{certificate.certificateDate}</span>
+
+            {/* 파일이름 조회 */}
+            <br />
+            <span className="text-muted">{certificateImage}</span>  
+            {/* 파일이름 조회 */}  
           </div>
         </Col>
         {isEditable && (
