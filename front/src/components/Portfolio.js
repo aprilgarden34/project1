@@ -77,10 +77,12 @@ function Portfolio() {
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
+          <div className="mb-2" />
             <Certificates
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
+          <div className="mb-2" />
              <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
