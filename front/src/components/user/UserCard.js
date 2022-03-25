@@ -19,7 +19,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     const currentUserId = user.id;
     console.log('user id:', user.id);
 
-    const res = await Api.patch("certificate/saveFile", {
+    const res = await Api.patch("user/saveFile", {
       userId: currentUserId,
       filePath: userFilePath
     });

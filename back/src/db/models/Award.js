@@ -38,6 +38,26 @@ class Award {
         const deletedAwardtList = await AwardModel.remove({id: awardId})
         return deletedAwardtList;
     }
+
+    // -------  파일 경로 값만 저장 -----------------
+
+    static async addFileById({ awardId, filePath }) {
+        const filter = { id: awardId };
+        const update = { filePath: filePath };
+        const option = { new: true };
+        // const option = { returnOriginal: false };
+
+        const addFileAward = await AwardModel.findOneAndUpdate(
+        filter,
+        update,
+        option
+        );
+
+        return addFileAward;
+    }
+
+    // -------  파일 경로 값만 저장 -----------------
+
 }
 
 export { Award };

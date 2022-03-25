@@ -43,6 +43,24 @@ class Project {
   } 
 
 // ----------------------------------------------------------------------------
+// -------  파일 경로 값만 저장 -----------------
+
+static async addFileById({ projectId, filePath }) {
+    const filter = { id: projectId };
+    const update = { filePath: filePath };
+    const option = { new: true };
+    // const option = { returnOriginal: false };
+
+    const addFileProject = await ProjectModel.findOneAndUpdate(
+        filter,
+        update,
+        option
+    );
+
+    return addFileProject;
+}
+
+// -------  파일 경로 값만 저장 -----------------
 
 }
 

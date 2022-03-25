@@ -34,7 +34,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
 
    // 백엔드의 'project/saveFile' URI로 formPatch 요청 (참고. app.js 의 formPost)
    const res = await Api.patch("project/saveFile", {
-     certificateId: currentProjectId,
+     projectId: currentProjectId,
      filePath: projectFilePath
    });
    
