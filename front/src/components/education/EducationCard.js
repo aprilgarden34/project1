@@ -23,7 +23,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     });
   };
 
-   // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
+   // filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
    const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +39,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     alert('백엔드에 이미지 파일이 저장되었습니다!')
   };
 
-  // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
+  // 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
   const handleChange = async (e) => {
     e.preventDefault();
     const img = {
