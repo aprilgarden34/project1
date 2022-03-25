@@ -31,7 +31,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     console.log('education id:', education.id);
 
     const res = await Api.patch("education/saveFile", {
-      userId: currentEducationId,
+      educationId: currentEducationId,
       filePath: educationFilePath
     });
     
