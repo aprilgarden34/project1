@@ -7,6 +7,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   
   const [image, setImage] = useState({ preview: '', data: '' })
   const [educationFilePath, setEducationFilePath] = useState(null);
+  const [previewMode, setPreviewMode] = useState(false)
 
 //삭제시 작동
   const handleDelete = async (e) => {
@@ -37,6 +38,9 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     
     console.log('저장된 값은 ', res.data);
     alert('백엔드에 이미지 파일이 저장되었습니다!')
+  
+    setPreviewMode(true) // 미리보기 모드 활성화
+
   };
 
   // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
@@ -72,13 +76,15 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
         <Col sm={4} className="text-center mb-4">
         <Form 
           encType="multipart/form-data" 
-          style={{ display: 'flex' }}
           onSubmit={handleSubmit}
           >  
           <Form.Group controlId="formFile" className="mb-3">
-            <Form>{image.preview && <img src={image.preview} alt="preview"width='100' height='100' />}</Form>            
-            <Form.Control type="file" onChange={handleChange} /> 
-            <Form.Control type="submit" />           
+          {previewMode ? <Form>{image.preview && <img src={image.preview} alt="preview"width='120' height='160' />}</Form> 
+            :<>
+              <Form>{image.preview && <img src={image.preview} alt="preview"width='100' height='100' />}</Form>            
+              <Form.Control type="file" onChange={handleChange} /> 
+              <Form.Control type="submit" />
+             </>}           
           </Form.Group>
         </Form>
         </Col>
