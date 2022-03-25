@@ -7,11 +7,15 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
   const [image, setImage] = useState({ preview: '', data: '' })
   const [userFilePath, setUserFilePath] = useState(null);
-
+  const [PreviewMode, setPreviewMode] = useState(false);
 
   // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    setPreviewMode(true) // 제출버튼을 누르면 프리뷰모드로 전환되어 미리보기 사진만 남는다. 
+    console.log('프리뷰 모드로 바뀌었습니다.')
+    
     const currentUserId = user.id;
     console.log('user id:', user.id);
 
@@ -64,10 +68,14 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             onSubmit={handleSubmit}
             >   
             <Form.Group controlId="formFile" className="mb-3">
+              
+             {PreviewMode ? <Form><img src={image.preview} alt="preview" width='100%' height='100%' /></Form>
+             :<>
               <Form.Label>프로필 사진을 업로드해주세요.</Form.Label>            
               <Form>{image.preview && <img src={image.preview} alt="preview" width='100' height='100' />}</Form>   
               <Form.Control type="file" onChange={handleChange} /> 
-              <Form.Control type="submit" />                 
+              <Form.Control type="submit" />
+              </>}                 
             </Form.Group>
           </Form>
           

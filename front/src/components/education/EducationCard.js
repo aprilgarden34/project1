@@ -70,8 +70,8 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
 
   return (
     <Card.Text>
-      <Row className="align-items-center">
-        <Col className="text-center mb-4">
+      <Row className="justify-content-between align-items-center mb-2">
+        <Col sm={4} className="text-center mb-4">
         <Form 
           encType="multipart/form-data" 
           style={{ display: 'flex' }}
@@ -84,14 +84,16 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             <Form.Control type="submit" />           
           </Form.Group>
         </Form>
-        <span className= "mb-4">{education?.school}</span>          
-        <span className="text-muted" style={{display: 'block'}}>
+        </Col>
+        <Col sm={4}>
+        <p>{education?.school}</p>          
+        <p className="text-muted" >
             {education?.major}
             ({education?.position})
-          </span>
+          </p>
         </Col>
         {isEditable && (
-          <Col xs lg="1">
+          <Col sm={1}>
             <div className="d-grid gap-2">
             <Button
               variant="outline-primary"
