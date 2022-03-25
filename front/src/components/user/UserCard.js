@@ -5,39 +5,69 @@ import * as Api from "../../api";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
-  const [ userImage, setUserImage ] = useState(null)
+  const [image, setImage] = useState({ preview: '', data: '' })
+  const [userFilePath, setUserFilePath] = useState(null);
 
-  //파일업로드시 작동
-  const SubmitHandler = async (e) => {       
+
+  // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
+  const handleSubmit = async (e) => {
     e.preventDefault();
-       
-    const formData = new FormData();
-    formData.append("file", userImage);
-    // const res = await Api.formPost("user/image", formData);
+    const currentUserId = user.id;
+    console.log('user id:', user.id);
 
-    // if (res.data) {
-    //   const fileInfo = {
-    //     filePath: res.data.path,
-    //     fileName: res.data.filename
-    //   }
-    //   console.log('백엔드에 저장된 데이터: ',fileInfo);      
-    //   alert('백엔드에 이미지 파일이 저장되었습니다!')
-    // } 
+    const res = await Api.patch("certificate/saveFile", {
+      userId: currentUserId,
+      filePath: userFilePath
+    });
+    
+    console.log('저장된 값은 ', res.data);
+    alert('백엔드에 이미지 파일이 저장되었습니다!')
+  };
+
+  // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
+  const handleChange = async (e) => {
+    e.preventDefault();
+
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    }
+    setImage(img)
+
+    const formData = new FormData();
+    
+    const uploadFile = e.target.files[0];
+    formData.append("file", uploadFile);
+
+    const res = await Api.filePost("user/uploadFile", formData);
+
+    if (res.data.error === false) {
+      return alert('5mb 이하의 이미지 형식 파일인지 확인해주세요!');
+    } else {
+        const fileInfo = {
+        filePath: res.data.path,
+        fileName: res.data.filename
+      }
+      console.log('백엔드에 저장된 데이터: ',fileInfo);
+
+      setUserFilePath(fileInfo.filePath);
+    }   
   };
 
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
-          <Form 
-            encType="multipart/form-data" 
-            style={{ width: "10rem",  height: "8rem" }}
-            onSubmit={SubmitHandler}
-            >  
+        <Form 
+            encType="multipart/form-data"
+            style={{ display: 'flex' }} 
+            onSubmit={handleSubmit}
+            >   
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>프로필 사진을 업로드해주세요.</Form.Label>            
-              <Form.Control type="file" onChange={(e) => setUserImage(e.target.files[0])} /> 
-              <Form.Control type="submit" />           
+              <Form>{image.preview && <img src={image.preview} alt="preview" width='100' height='100' />}</Form>   
+              <Form.Control type="file" onChange={handleChange} /> 
+              <Form.Control type="submit" />                 
             </Form.Group>
           </Form>
           
