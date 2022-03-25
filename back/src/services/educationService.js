@@ -9,8 +9,8 @@ class educationService {
         const newEducation = { user, id, school, major, position };
         const education = await Education.create({ newEducation });
         return this.parseEducation({education});
-
     }
+    
     static async updateEducation({ id, school, major, position }) {
 
         const newEducation = { id, school, major, position };
