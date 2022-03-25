@@ -9,7 +9,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
   const [awardFilePath, setAwardFilePath] = useState(null);
   
   // 삭제시 작동
-  const HandleDelete = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     try {
       await Api.delete("awards", award.id);
@@ -31,7 +31,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
     console.log('award id:', award.id);
 
     const res = await Api.patch("award/saveFile", {
-      userId: currentAwardId,
+      awardId: currentAwardId,
       filePath: awardFilePath
     });
     
@@ -101,7 +101,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
             <Button
               variant="outline-danger"              
               size="sm"
-              onClick={HandleDelete}
+              onClick={handleDelete}
               className="mr-3"
             >
               삭제
