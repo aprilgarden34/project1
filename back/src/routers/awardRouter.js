@@ -5,6 +5,8 @@ import { upload } from "../middlewares/upload";
 import { userAuthService } from "../services/userService";
 import { awardService } from "../services/awardService";
 
+import multer from "multer";
+
 const awardRouter = Router();
 
 awardRouter.post("/award/create", login_required, async function(req, res, next) {
