@@ -46,7 +46,6 @@ class Certificate {
     const filter = { id: certificateId };
     const update = { filePath: filePath };
     const option = { new: true };
-    // const option = { returnOriginal: false };
 
     const addFileCertificate = await CertificateModel.findOneAndUpdate(
       filter,

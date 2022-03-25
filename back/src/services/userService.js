@@ -145,6 +145,28 @@ class userAuthService {
       const userEmail = { email : email };
       return userEmail;
   }
+
+   // ----------------- 파일 경로 추가 저장 -------------------------
+   static async addFileInfo({ userId, filePath }) {
+    
+    const user = await User.findById({ user_id : userId });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage = user_id;
+      // const errorMessage = "해당 유저는 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage }
+    }
+
+    // db의 filepath만 추가저장
+    const addedUserFile = await User.addFileById({ userId, filePath });
+    addedUserFile.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    return addedUserFile;
+    
+  }
+  // ----------------- 파일 경로 추가 저장 -------------------------
+
+
 }
 
 export { userAuthService };
