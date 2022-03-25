@@ -15,7 +15,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [projectDesc, setDescription] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
