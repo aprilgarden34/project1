@@ -69,6 +69,29 @@ function RegisterForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+
+              {/* ----- 2주차 : 회원가입 이메일 중복 확인 ------ */}
+              <Button variant="outline-info" 
+                onClick={ async (e) => {
+                  e.preventDefault();
+              
+                  try {
+                    // "user/emailValidation" 엔드포인트로 post요청함.
+                    const res = await Api.post("user/emailValid", {
+                      email
+                    });
+              
+                    setEmail(res.data.email);
+                    alert('이 이메일은 사용 가능한 이메일입니다.');
+
+                  } catch (err) {
+                    alert('중복된 이메일이 있습니다. 다른 이메일을 입력해주세요.');
+                  }
+                }}>
+                  이메일 중복확인
+                </Button>
+              {/* ----- 2주차 : 회원가입 이메일 중복 확인 ------ */}
+
               {!isEmailValid && (
                 <Form.Text className="text-success">
                   이메일 형식이 올바르지 않습니다.
