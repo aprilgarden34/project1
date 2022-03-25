@@ -4,12 +4,34 @@
   변경되도록 Project 컴퍼넌트에서 작동한다. 
 */
 
-import { Card, Button, Row, Col } from "react-bootstrap";
+import * as Api from "../../api";
+import React, {useState} from "react";
+import { Form, Card, Button, Row, Col } from "react-bootstrap";
 
-function ProjectCard({ project, isEditable, setIsEditing }) {
+function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
+  
+const [projectImage, setProjectsImage] = useState(null)
+  
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
+        {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
+        <Col xs lg="1">                                  
+          <Form onSubmit= {(e) => { 
+            e.preventDefault()
+            const formData = new FormData()
+            formData.append('file', projectImage)  
+            // Api.formPost("project/image", formData )
+           }}>
+
+          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>사진 추가</Form.Label>
+          <Form.Control type="file" onChange={(e)=> setProjectsImage(e.target.files[0])} />
+          <Form.Control type="submit"/>
+          </Form.Group>
+          </Form>
+        </Col>
+          {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col>
           {project.projectName}
           <br />
@@ -21,15 +43,31 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
         </Col>
         {isEditable && (
           <Col xs lg="1">
-            <Button
-              variant="outline-info"
+            <div className="d-grid gap-2">
+              <Button
+                variant="outline-primary" 
+                size="sm"
+                onClick={() => setIsEditing((prev) => !prev)}
+                className="mr-3"
+              >
+                편집
+              </Button>
+              <Button
+              variant="outline-danger"
               size="sm"
-              onClick={() => setIsEditing((prev) => !prev)}
               className="mr-3"
-            >
-              편집
-            </Button>
-          </Col>
+              onClick={() => {
+                   const index = projects.indexOf(project)              
+                   projects.splice(index, 1)
+                   const newProjects = [...projects]
+                   setProjects(newProjects)        
+                   Api.delete("projectList", project.id )      
+                  }
+              }
+        >삭제
+        </Button>
+      </div>    
+    </Col>
         )}
       </Row>
     </Card.Text>
@@ -37,3 +75,5 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
 }
 
 export default ProjectCard;
+
+

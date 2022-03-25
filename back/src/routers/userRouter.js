@@ -14,9 +14,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
     }
 
     // req (request) 에서 데이터 가져오기
-    const name = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
+    const { name, email, password } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
@@ -138,6 +136,7 @@ userAuthRouter.get(
   }
 );
 
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
@@ -146,5 +145,41 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+userAuthRouter.delete("/user/remove", login_required, async (req,res)=> {
+  const user_id = req.currentUserId;
+  
+  const currentUserInfo = await userAuthService.removeUser({user_id});
+  res.send(currentUserInfo);
+})
+
+// 이메일 중복확인
+userAuthRouter.post("/user/emailValid", async function (req, res, next) {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
+    }
+
+    // req (request) 에서 데이터 가져오기
+    const email = req.body.email;
+
+    // 위 데이터를 유저 db에 추가하기
+    const correctEmail = await userAuthService.emailVaild({
+      email
+    });
+
+    if (correctEmail.errorMessage) {
+      throw new Error(correctEmail.errorMessage);
+    }
+
+    res.status(201).json(correctEmail);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 export { userAuthRouter };

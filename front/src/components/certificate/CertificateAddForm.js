@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -12,13 +13,15 @@ function CertificateAddForm({
   const [certificateName, setCertificateName] = useState("");
   const [certificateDesc, setCertificateDesc] = useState("");
   const [whenDate, setWhenDate] = useState(new Date());
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // portfolioOwnerId를 currentUserId 변수에 할당함.
     const currentUserId = portfolioOwnerId;
     const certificateDate = whenDate.toISOString().split("T")[0];
+
 
     // "certificate/create" 엔드포인트로 post요청함.
     await Api.post("certificate/create", {
@@ -27,6 +30,7 @@ function CertificateAddForm({
       certificateDesc: certificateDesc,
       certificateDate: certificateDate,
     });
+
 
     // "certificatelist/유저id" 엔드포인트로 get요청함.
     const res = await Api.get("certificatelist", currentUserId);
