@@ -84,7 +84,26 @@ class projectService {
     return deletedProjectList
     }
 
-// -------------------------------  Delete 서비스 추가  -----------------------------------------//
+    // -------------------------------  Delete 서비스 추가  -----------------------------------------//
+
+    // ----------------- 파일 경로 추가 저장 -------------------------
+    static async addFileInfo({ projectId, filePath }) {
+        // 프로젝트 존재 확인
+        const project = await Project.findById({ projectId });
+        // db에서 찾지 못한 경우, 에러 메시지 반환
+        if (!project) {
+            const errorMessage = "해당 프로젝트는 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+            return { errorMessage }
+        }
+
+        // db의 filepath만 추가저장
+        const addedProjectFile = await Project.addFileById({ projectId, filePath });
+        addedProjectFile.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+        return addedProjectFile;
+        
+    }
+    // ----------------- 파일 경로 추가 저장 -------------------------
 
 }
 

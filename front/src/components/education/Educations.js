@@ -28,6 +28,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
             education={education}
             setEducations={setEducations}
             isEditable={isEditable}
+            portfolioOwnerId={portfolioOwnerId}
           />
         ))}
         

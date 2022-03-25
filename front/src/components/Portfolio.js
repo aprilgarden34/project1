@@ -57,30 +57,33 @@ function Portfolio() {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
+  
+    <Container fluid="md">
+      <Row style={{minWidth: '960px'}}>
+        <Col sm={4}>
           <User
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
-        <Col>
+        <Col sm={8}>
 
           <div style={{ textAlign: "center" }}>
-            <Educations
+            <Educations 
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           <div className="mb-2" />
-            <Awards
+            <Awards 
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
+          <div className="mb-2" />
             <Certificates
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
+          <div className="mb-2" />
              <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
@@ -90,6 +93,7 @@ function Portfolio() {
         </Col>
       </Row>
     </Container>
+  
   );
 }
 
