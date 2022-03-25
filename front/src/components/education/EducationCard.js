@@ -28,10 +28,10 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     e.preventDefault();
 
     const currentEducationId = education.id;
-    console.log('education id:', education.id);
+    //console.log('education id:', education.id);
 
     const res = await Api.patch("education/saveFile", {
-      userId: currentEducationId,
+      id: currentEducationId,
       filePath: educationFilePath
     });
     
