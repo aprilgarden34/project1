@@ -100,7 +100,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
         </Col>
           {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
         <Col sm={4}>
-          <div style={{lineHeight: "5px"}}>
+          <div style={{lineHeight: "8px"}}>
           <p>{project.projectName}</p>
           <p className="text-muted">{project.projectDesc}</p>
           <p className="text-muted">

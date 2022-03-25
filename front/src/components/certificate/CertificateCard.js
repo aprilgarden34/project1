@@ -94,7 +94,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
         </Col>
       {/* ------------------------------- Murter 관련 부분 -------------------------------- */}
         <Col sm={4}>    
-          <div style={{lineHeight: '5px'}} > 
+          <div style={{lineHeight: '8px'}} > 
             <p>{certificate.certificateName}</p>
             <p className="text-muted">{certificate.certificateDesc}</p>
             <p className="text-muted">{certificate.certificateDate}</p>    

@@ -76,7 +76,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
           onSubmit={handleSubmit}
           >  
           <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>학력 파일을 업로드해주세요.</Form.Label>
             <Form>{image.preview && <img src={image.preview} alt="preview"width='100' height='100' />}</Form>            
             <Form.Control type="file" onChange={handleChange} /> 
             <Form.Control type="submit" />           
@@ -84,11 +83,13 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
         </Form>
         </Col>
         <Col sm={4}>
-        <p>{education?.school}</p>          
-        <p className="text-muted" >
-            {education?.major}
-            ({education?.position})
-          </p>
+        <div style={{lineHeight: '8px'}} > 
+          <p>{education?.school}</p>
+          <p className="text-muted" >
+              {education?.major}
+              ({education?.position})
+            </p>
+        </div>
         </Col>
         {isEditable && (
           <Col sm={1}>

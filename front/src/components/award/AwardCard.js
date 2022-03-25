@@ -77,8 +77,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
             style={{ display: 'flex' }}
             onSubmit={handleSubmit}
             > 
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>수상이력 파일을 업로드해주세요.</Form.Label> 
+            <Form.Group controlId="formFile" className="mb-3"> 
               <Form>{image.preview && <img src={image.preview} alt="preview"width='100' height='100' />}</Form>           
               <Form.Control type="file" onChange={handleChange} /> 
               <Form.Control type="submit" />           
@@ -86,8 +85,10 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
           </Form>   
         </Col>
         <Col sm={4}>
-          <span className= "mb-4" style={{display: 'block'}}>{award.awardName}</span>
-          <span className="text-muted" style={{display: 'block'}}>{award.awardDesc}</span>
+          <div style={{lineHeight: '8px'}} > 
+            <p>{award.awardName}</p>
+            <p>{award.awardDesc}</p>
+          </div>
         </Col>
         {isEditable && (
           <Col sm={1}>
