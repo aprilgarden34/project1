@@ -9,7 +9,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   const [educationFilePath, setEducationFilePath] = useState(null);
 
   //삭제시 작동
-  const DeleleteHandler = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     try {
       await Api.delete("educations", education.id);
@@ -104,7 +104,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             <Button
               variant="outline-danger"
               size="sm"
-              onClick={DeleleteHandler}
+              onClick={handleDelete}
               className="mr-3"
             >
               삭제
