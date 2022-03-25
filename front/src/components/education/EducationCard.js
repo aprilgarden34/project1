@@ -8,7 +8,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   const [image, setImage] = useState({ preview: '', data: '' })
   const [educationFilePath, setEducationFilePath] = useState(null);
 
-
 //삭제시 작동
   const handleDelete = async (e) => {
     e.preventDefault();
