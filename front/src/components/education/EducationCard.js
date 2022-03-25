@@ -4,7 +4,6 @@ import * as Api from "../../api";
 
 // 편집 버튼 활성화는 isEditable이 true, setIsEditing(true)일 경우만 가능
 function EducationCard({ educations, setEducations, education, isEditable, setIsEditing }) {
-  
   const [image, setImage] = useState({ preview: '', data: '' })
   const [educationFilePath, setEducationFilePath] = useState(null);
 
