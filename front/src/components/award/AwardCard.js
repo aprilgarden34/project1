@@ -24,7 +24,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
   };
 
   // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
-  const handleSubmit = async (e) => {       
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const currentAwardId = award.id;
@@ -48,7 +48,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
       data: e.target.files[0],
     }
     setImage(img)
-       
+
     const formData = new FormData();
     const uploadFile = e.target.files[0];
     formData.append("file", uploadFile);
