@@ -30,7 +30,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     const currentEducationId = education.id;
     console.log('education id:', education.id);
 
-    const res = await Api.patch("certificate/saveFile", {
+    const res = await Api.patch("education/saveFile", {
       userId: currentEducationId,
       filePath: educationFilePath
     });
