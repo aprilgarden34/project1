@@ -8,7 +8,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   const [image, setImage] = useState({ preview: '', data: '' })
   const [educationFilePath, setEducationFilePath] = useState(null);
 
-  //삭제시 작동
+//삭제시 작동
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
@@ -28,7 +28,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     e.preventDefault();
 
     const currentEducationId = education.id;
-    console.log('education id:', education.id);
+    //console.log('education id:', education.id);
 
     const res = await Api.patch("education/saveFile", {
       educationId: currentEducationId,

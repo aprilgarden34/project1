@@ -153,6 +153,7 @@ userAuthRouter.delete("/user/remove", login_required, async (req,res)=> {
   res.send(currentUserInfo);
 })
 
+
 // 이메일 중복확인
 userAuthRouter.post("/user/emailValid", async function (req, res, next) {
   try {
@@ -179,7 +180,6 @@ userAuthRouter.post("/user/emailValid", async function (req, res, next) {
     next(error);
   }
 });
-
 
 
 export { userAuthRouter };

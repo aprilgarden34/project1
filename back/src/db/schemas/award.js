@@ -18,7 +18,12 @@ const AwardSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
-        },      
+        },
+        // ----- 파일 업로드 : 저장경로 필드 생성
+        filePath : {
+            type: String,
+        },
+        // --------------------------------------
     },
     {
         timestamps: true,

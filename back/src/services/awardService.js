@@ -60,11 +60,31 @@ class awardService {
         const deletedAwardList = await Award.removeById({ awardId })
         // db에서 찾지 못한 경우, 에러 메시지 반환
         if (!deletedAwardList) {
-          const errorMessage = "해당 프로젝트는 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+          const errorMessage = "해당 수상은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
           return { errorMessage }
         }
       return deletedAwardList;
-      }
+    }
+
+    // ----------------- 파일 경로 추가 저장 -------------------------
+  static async addFileInfo({ awardId, filePath }) {
+    // 수상내역 존재 확인
+    const award = await Award.findById({ awardId });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!award) {
+      const errorMessage = "해당 수상내역은 등록 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage }
+    }
+
+    // db의 filepath만 추가저장
+    const addedAwardFile = await Award.addFileById({ awardId, filePath });
+    addedAwardFile.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    return addedAwardFile;
+    
+   }
+   // ----------------- 파일 경로 추가 저장 -------------------------
+
 }
 
 export { awardService }
