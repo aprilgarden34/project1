@@ -22,7 +22,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     });
   };
 
-   // filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
+  // filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
    const handleSubmit = async (e) => {
     e.preventDefault();
 
