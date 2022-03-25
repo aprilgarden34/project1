@@ -62,7 +62,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
         fileName: res.data.filename
       }
       console.log('백엔드에 저장된 데이터: ',fileInfo);
-
       setEducationFilePath(fileInfo.filePath);
     }   
   };    
