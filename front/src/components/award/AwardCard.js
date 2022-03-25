@@ -7,7 +7,8 @@ import * as Api from "../../api";
 function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
   const [image, setImage] = useState({ preview: '', data: '' })
   const [awardFilePath, setAwardFilePath] = useState(null);
-  
+  const [previewMode, setPreviewMode] = useState(false)
+
   // 삭제시 작동
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -37,6 +38,8 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
     
     console.log('저장된 값은 ', res.data);
     alert('백엔드에 이미지 파일이 저장되었습니다!')
+
+    setPreviewMode(true) // 미리보기 모드로 전환
 
   };
 
@@ -74,13 +77,15 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
         <Col sm={4} className="text-center mb-4">
           <Form 
             encType="multipart/form-data" 
-            style={{ display: 'flex' }}
             onSubmit={handleSubmit}
             > 
             <Form.Group controlId="formFile" className="mb-3"> 
+            {previewMode ? <Form>{image.preview && <img src={image.preview} alt="preview"width='120' height='160' />}</Form> 
+              :<>
               <Form>{image.preview && <img src={image.preview} alt="preview"width='100' height='100' />}</Form>           
               <Form.Control type="file" onChange={handleChange} /> 
-              <Form.Control type="submit" />           
+              <Form.Control type="submit" />
+              </>}           
             </Form.Group>
           </Form>   
         </Col>
