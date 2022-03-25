@@ -4,8 +4,6 @@ import * as Api from "../../api";
 
 function CertificateCard({ certificates, setCertificates, certificate, isEditable, setIsEditing }) {
 
-const [certificateImage, setCertificateImage] = useState(null)
-
  //  ----------------------------------- 파일 업로드 ----------------------------------------
 
  const [certificateFilePath, setCertificateFilePath] = useState(null);

@@ -37,7 +37,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     
     console.log('저장된 값은 ', res.data);
     alert('백엔드에 이미지 파일이 저장되었습니다!')
-
   };
 
   // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
@@ -63,7 +62,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
         fileName: res.data.filename
       }
       console.log('백엔드에 저장된 데이터: ',fileInfo);
-
       setEducationFilePath(fileInfo.filePath);
     }   
   };    

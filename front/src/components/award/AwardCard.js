@@ -31,7 +31,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
     console.log('award id:', award.id);
 
     const res = await Api.patch("award/saveFile", {
-      userId: currentAwardId,
+      awardId: currentAwardId,
       filePath: awardFilePath
     });
     
