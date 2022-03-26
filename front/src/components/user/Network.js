@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 
 import * as Api from "../../api";
-import UserCard from "./UserCard";
+import NetworkUserCard from "./NetworUserCard";
 import { UserStateContext } from "../../App";
+
 
 function Network() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Network() {
     <Container fluid>
       <Row xs="auto" className="jusify-content-center">
         {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork />
+          <NetworkUserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
     </Container>
