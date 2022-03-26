@@ -10,6 +10,9 @@ import { Form, Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
  
+  // 이미지 미리보기를 위한 변수 설정
+  const [image, setImage] = useState({ preview: '', data: '' })
+  const [previewMode, setPreviewMode] = useState(false)
 
  //  ----------------------------------- 파일 업로드 ----------------------------------------
 
@@ -18,6 +21,11 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
  // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
  const handleSubmit = async (e) => {
    e.preventDefault();
+
+
+  // 제출 버튼 누를시 미리보기 모드를 온 
+  setPreviewMode(true)
+
 
    // portfolioOwnerId를 currentUserId 변수에 할당함.
    // const currentUserId = portfolioOwnerId;
@@ -38,6 +46,14 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
  // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
  const handleChange = async (e) => {
    e.preventDefault();
+
+   // 미리보기를 위한 설정
+   
+   const img = {
+    preview: URL.createObjectURL(e.target.files[0]),
+    data: e.target.files[0],
+  }
+    setImage(img)
 
    // files 데이터 전달할 formData 생성
    const formData = new FormData();
@@ -70,27 +86,30 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
         {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
-        <Col xs lg="1">                                  
+        <Col sm={4}>                                  
           <Form onSubmit= {handleSubmit}>
           <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>사진 추가</Form.Label>
-          <Form.Control type="file" onChange={handleChange} />
-          <Form.Control type="submit"/>
+          {previewMode ? <Form>{image.preview && <img src={image.preview} alt="preview"width='120' height='150' />}</Form> 
+            :<>  
+              <Form className="mb-2">{image.preview && <img src={image.preview} alt="preview"width='90' height='120' />}</Form>    
+              <Form.Control type="file" name="image" onChange={handleChange} />
+              <Form.Control type="submit" />
+            </>}
           </Form.Group>
           </Form>
         </Col>
           {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
-        <Col>
-          {project.projectName}
-          <br />
-          <span className="text-muted">{project.projectDesc}</span>
-          <br />
-          <span className="text-muted">
+        <Col sm={4}>
+          <div style={{lineHeight: "8px"}}>
+          <p>{project.projectName}</p>
+          <p className="text-muted">{project.projectDesc}</p>
+          <p className="text-muted">
             {`${project.projectStart} ~ ${project.projectEnd}`}
-          </span>
-        </Col>
+          </p>
+          </div>
+        </Col >
         {isEditable && (
-          <Col xs lg="1">
+          <Col sm={1}>
             <div className="d-grid gap-2">
               <Button
                 variant="outline-primary" 
