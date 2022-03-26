@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
-function NetworkUserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function NetworkUserCard({ user, isNetwork }) {
   const navigate = useNavigate();
 
   return (

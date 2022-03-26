@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
+import { Modal, Card, Button, Row, Col, Form } from "react-bootstrap";
 import * as Api from "../../api";
 
 //등록된 Award 전체를 보여줌
@@ -8,6 +8,14 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
   const [image, setImage] = useState({ preview: '', data: '' })
   const [awardFilePath, setAwardFilePath] = useState(null);
   const [previewMode, setPreviewMode] = useState(false)
+
+
+// 모달 관련 기능 ------------------
+
+const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
 
   // 삭제시 작동
   const handleDelete = async (e) => {
@@ -19,7 +27,6 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
     }
     setAwards((e) => {
       const delAward = e.filter((v) => v.id !== award.id);
-        alert("정말 삭제하시겠습니까? 확인버튼을 누르시면 데이터는 복구되지 않습니다.")
         return delAward;    
     });
   };
@@ -72,6 +79,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
   };    
 
   return (
+  <>
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
       {isEditable ?  
@@ -110,7 +118,7 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
             <Button
               variant="outline-danger"              
               size="sm"
-              onClick={handleDelete}
+              onClick={handleShow}
               className="mr-3"
             >
               삭제
@@ -127,7 +135,28 @@ function AwardCard({ awards, setAwards, award, isEditable, setIsEditing }) {
       }
       </Row>
     </Card.Text>
-  );
+ 
+   {/* 모달 컴퍼넌트 기능 */}
+
+   <Modal show={show} onHide={handleClose} animation={false}>
+   <Modal.Header closeButton>
+     <Modal.Title>주의하세요!</Modal.Title>
+   </Modal.Header>
+   <Modal.Body>한번 삭제하면 돌이킬수 없습니다!</Modal.Body>
+   <Modal.Footer>
+     <Button variant="secondary" onClick={handleDelete}>
+       삭제
+     </Button>
+     <Button variant="primary" onClick={handleClose}>
+       취소
+     </Button>
+   </Modal.Footer>
+     </Modal>
+   </>  
+   
+ 
+ 
+ );
 }
 
 export default AwardCard;
