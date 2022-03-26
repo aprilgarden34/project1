@@ -5,6 +5,8 @@ import { UserStateContext, DispatchContext } from "../App";
 import * as Api from "../api";
 
 function Header() {
+ 
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,24 +27,26 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname}>
+    <Nav activeKey={location.pathname}
+      style={{ 
+        verticalAlign: "middle",       
+        backgroundColor: '#D9D7F1',
+        fontSize: '30px',
+        fontColor: 'black'
+      }}
+    >
       <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-  {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }
-      <Nav.Item>
-        <Nav.Link onClick={() => Api.put("user/remove", { currentUserId: userState.user.id })}>회원 탈퇴</Nav.Link>
-      </Nav.Item>  
-  {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }    
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+        <Nav.Link disabled>My Portfolio</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+        <Nav.Link onClick={() => navigate("/")}>My page</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link onClick={() => navigate("/network")}>Network</Nav.Link>
       </Nav.Item>
       {isLogin && (
         <Nav.Item>
-          <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+          <Nav.Link onClick={logout}>Logout</Nav.Link>
         </Nav.Item>
       )}
     </Nav>
@@ -50,4 +54,3 @@ function Header() {
 }
 
 export default Header;
-

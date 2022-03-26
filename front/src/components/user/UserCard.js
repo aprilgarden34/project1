@@ -59,7 +59,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   };
 
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-2 ms-3 mr-5" 
+      style={{ 
+       marginTop: '30px',      
+       width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
         { isEditable ? 
