@@ -27,10 +27,11 @@ function Header() {
 
   return (
     <Nav activeKey={location.pathname}
-      style={{
+      style={{ 
+        verticalAlign: "middle",       
         backgroundColor: '#D9D7F1',
         fontSize: '30px',
-        color: 'black'
+        fontColor: 'black'
       }}
     >
       <Nav.Item className="me-auto mb-5">

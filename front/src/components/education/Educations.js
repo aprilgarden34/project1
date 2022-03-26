@@ -24,7 +24,11 @@ function Educations({ portfolioOwnerId, isEditable }) {
         marginTop: '30px'
       }}
     >
-      <Card.Body>
+      <Card.Body
+        style={{
+          backgroundColor: '#F3F1F5'
+        }}
+      >
         <Card.Title style={{
         backgroundColor: '#D9D7F1',
         fontSize: '30px',
