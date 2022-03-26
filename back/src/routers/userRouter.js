@@ -148,7 +148,7 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
-userAuthRouter.delete("/user/remove", login_required, async (req,res)=> {
+userAuthRouter.delete("/user/remove/:id", login_required, async (req,res)=> {
   const user_id = req.currentUserId;
   
   const currentUserInfo = await userAuthService.removeUser({user_id});

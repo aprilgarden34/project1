@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
+import { NavbarBrand } from "react-bootstrap";
+import * as Api from "../api";
 
 function Header() {
   const navigate = useNavigate();
@@ -28,6 +30,14 @@ function Header() {
       <Nav.Item className="me-auto mb-5">
         <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
       </Nav.Item>
+  {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }
+      <Nav.Item>
+        <Nav.Link onClick={() => {Api.delete("user/remove", userState.user.id)
+        logout()
+        }}>회원 탈퇴</Nav.Link>
+      </Nav.Item>  
+
+  {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }    
       <Nav.Item>
         <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
       </Nav.Item>
@@ -44,3 +54,4 @@ function Header() {
 }
 
 export default Header;
+
