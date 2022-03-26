@@ -124,3 +124,4 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 }
 
 export default UserCard;
+
