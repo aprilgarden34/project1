@@ -41,9 +41,18 @@ function Certificates({ portfolioOwnerId, isEditable }) {
  
 
   return (
-    <Card>
+    <Card
+      style={{
+        marginTop: '30px'
+      }}
+    >
       <Card.Body>
-        <Card.Title>
+        <Card.Title         
+          style={{
+            backgroundColor: '#D9D7F1',
+            fontSize: '30px',
+            color: 'black'
+          }}>
           자격증
         </Card.Title>
         {certificates.map((certificate) => (

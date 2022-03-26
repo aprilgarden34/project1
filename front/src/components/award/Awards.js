@@ -18,9 +18,19 @@
     }, [portfolioOwnerId]);
   
     return (
-      <Card>
+      <Card
+        style={{
+          marginTop: '30px'
+        }}
+      >
         <Card.Body>
-          <Card.Title>수상이력</Card.Title>
+          <Card.Title
+            style={{
+              backgroundColor: '#D9D7F1',
+              fontSize: '30px',
+              color: 'black'
+            }}
+          >수상이력</Card.Title>
           {awards.map((award) => (
             <Award
               portfolioOwnerId={portfolioOwnerId}
