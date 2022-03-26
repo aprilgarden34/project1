@@ -1,18 +1,93 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
+import { useState } from "react"
+import { Card, Row, Button, Col, Form } from "react-bootstrap";
+import * as Api from "../../api";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
+  const [image, setImage] = useState({ preview: '', data: '' })
+  const [userFilePath, setUserFilePath] = useState(null);
+  const [PreviewMode, setPreviewMode] = useState(false);
+
+  // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    setPreviewMode(true) // 제출버튼을 누르면 프리뷰모드로 전환되어 미리보기 사진만 남는다. 
+    console.log('프리뷰 모드로 바뀌었습니다.')
+    
+    const currentUserId = user.id;
+    console.log('user id:', user.id);
+
+    const res = await Api.patch("user/saveFile", {
+      userId: currentUserId,
+      filePath: userFilePath
+    });
+    
+    console.log('저장된 값은 ', res.data);
+    alert('백엔드에 이미지 파일이 저장되었습니다!')
+  };
+
+  // (프론트) 업로드 UI 내용물이 바뀔 때 (백엔드) uploads 폴더에 저장하는 handleChange 이벤트핸들러
+  const handleChange = async (e) => {
+    e.preventDefault();
+
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    }
+    setImage(img)
+
+    const formData = new FormData();
+    
+    const uploadFile = e.target.files[0];
+    formData.append("file", uploadFile);
+
+    const res = await Api.filePost("user/uploadFile", formData);
+
+    if (res.data.error === false) {
+      return alert('5mb 이하의 이미지 형식 파일인지 확인해주세요!');
+    } else {
+        const fileInfo = {
+        filePath: res.data.path,
+        fileName: res.data.filename
+      }
+      console.log('백엔드에 저장된 데이터: ',fileInfo);
+
+      setUserFilePath(fileInfo.filePath);
+    }   
+  };
+
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-2 ms-3 mr-5" 
+      style={{ 
+       marginTop: '30px',      
+       width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
-          />
+        { isEditable ? 
+        <>
+        <Form 
+            encType="multipart/form-data"
+            style={{ display: 'flex' }} 
+            onSubmit={handleSubmit}
+            >   
+            <Form.Group controlId="formFile" className="mb-3">
+            
+             {PreviewMode ? <Form><img src={image.preview} alt="preview" width='100%' height='100%' /></Form>
+             :<>
+              <Form.Label>프로필 사진을 업로드해주세요.</Form.Label>            
+              <Form>{image.preview && <img src={image.preview} alt="preview" width='100' height='100' />}</Form>   
+              <Form.Control type="file" onChange={handleChange} /> 
+              <Form.Control type="submit" />
+              </>}                 
+            </Form.Group>
+          </Form>
+        </>
+        : <div style={{marginBottom: "15px"}}>
+          <img src={require('./image.jpg')} alt="default" width="100%" height="100%" /> 
+          </div> }
+
         </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
@@ -23,7 +98,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             <Row className="mt-3 text-center text-info">
               <Col sm={{ span: 20 }}>
                 <Button
-                  variant="outline-info"
+                  variant="outline-primary"
                   size="sm"
                   onClick={() => setIsEditing(true)}
                 >
@@ -49,3 +124,4 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 }
 
 export default UserCard;
+

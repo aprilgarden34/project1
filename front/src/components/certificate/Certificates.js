@@ -38,16 +38,33 @@ function Certificates({ portfolioOwnerId, isEditable }) {
     );
   }, [portfolioOwnerId]);
   
+ 
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>자격증</Card.Title>
+    <Card
+      style={{
+        marginTop: '30px'
+      }}
+    >
+      <Card.Body
+        style={{
+          backgroundColor: '#F3F1F5'
+        }}
+      >
+        <Card.Title         
+          style={{
+            backgroundColor: '#D9D7F1',
+            fontSize: '30px',
+            color: 'black'
+          }}>
+          자격증
+        </Card.Title>
         {certificates.map((certificate) => (
           <Certificate
             portfolioOwnerId={portfolioOwnerId}
             key={certificate.id}
             certificate={certificate}
+            certificates={certificates}
             setCertificates={setCertificates}
             isEditable={isEditable}
           />
@@ -56,7 +73,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+              <Button style={{backgroundColor: '#B667F1'}} onClick={() => setIsAdding(true)}>+</Button>
             </Col>
           </Row>
         )}

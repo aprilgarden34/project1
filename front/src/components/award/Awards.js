@@ -13,13 +13,28 @@
   
     useEffect(() => {
       // "awardlist/유저id"로 GET 요청, response의 data로 awards를 세팅함.
-      Api.get("awardlist", portfolioOwnerId).then((res) => setAwards(res.data));
+      Api.get("awardlist", portfolioOwnerId)
+      .then((res) => setAwards(res.data));
     }, [portfolioOwnerId]);
   
     return (
-      <Card>
-        <Card.Body>
-          <Card.Title>수상이력</Card.Title>
+      <Card
+        style={{
+          marginTop: '30px'
+        }}
+      >
+        <Card.Body
+          style={{
+            backgroundColor: '#F3F1F5'
+          }}
+        >
+          <Card.Title
+            style={{
+              backgroundColor: '#D9D7F1',
+              fontSize: '30px',
+              color: 'black'
+            }}
+          >수상이력</Card.Title>
           {awards.map((award) => (
             <Award
               portfolioOwnerId={portfolioOwnerId}
@@ -32,7 +47,7 @@
           {isEditable && (
             <Row className="mt-3 text-center mb-4">
               <Col sm={{ span: 20 }}>
-                <Button onClick={() => setIsAdding(true)}>+</Button>
+                <Button style={{backgroundColor: '#B667F1'}} onClick={() => setIsAdding(true)}>+</Button>
               </Col>
             </Row>
           )}

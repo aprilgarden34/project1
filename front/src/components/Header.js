@@ -1,9 +1,19 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
+import * as Api from "../api";
 
 function Header() {
+ 
+//---------------------- 모달 관련 기능 ------------------
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,22 +34,62 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname}>
+    <>
+    <Nav activeKey={location.pathname}
+      style={{ 
+        verticalAlign: "middle",       
+        backgroundColor: '#D9D7F1',
+        fontSize: '30px',
+        fontColor: 'black'
+      }}
+    >
       <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
+        <Nav.Link disabled>My Portfolio</Nav.Link>
+
+      <Nav.Item>
+      </Nav.Item>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+        <Nav.Link onClick={handleShow}>
+         Withdraw
+        </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+        <Nav.Link onClick={() => navigate("/network")}>Network</Nav.Link>
       </Nav.Item>
       {isLogin && (
         <Nav.Item>
-          <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+          <Nav.Link onClick={logout}>Logout</Nav.Link> 
         </Nav.Item>
       )}
+      <Nav.Item>
+        <Nav.Link onClick={() => navigate("/")}>My page</Nav.Link>
+      </Nav.Item>
+    
     </Nav>
+  
+
+    {/* 모달 컴퍼넌트 기능 */}
+
+    <Modal show={show} onHide={handleClose} animation={false}>
+    <Modal.Header closeButton>
+      <Modal.Title>주의하세요!</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>한번 탈퇴하면 돌이킬수 없습니다!</Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick= {
+        () => { 
+          Api.delete("user/remove")
+          logout()}}>
+        탈퇴
+      </Button>
+      <Button variant="primary" onClick={handleClose}>
+        취소
+      </Button>
+    </Modal.Footer>
+      </Modal>
+    </>  
+   
   );
 }
 
