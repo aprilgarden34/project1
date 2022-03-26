@@ -32,8 +32,11 @@ function Header() {
       </Nav.Item>
   {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }
       <Nav.Item>
-        <Nav.Link onClick={() => Api.put("user/remove", { currentUserId: userState.user.id })}>회원 탈퇴</Nav.Link>
+        <Nav.Link onClick={() => {Api.delete("user/remove", userState.user.id)
+        logout()
+        }}>회원 탈퇴</Nav.Link>
       </Nav.Item>  
+
   {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }    
       <Nav.Item>
         <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
