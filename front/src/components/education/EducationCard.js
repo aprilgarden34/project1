@@ -73,6 +73,8 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
+      {isEditable?
+        <>
         <Col sm={4} className="text-center mb-4">
         <Form 
           encType="multipart/form-data" 
@@ -97,7 +99,6 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             </p>
         </div>
         </Col>
-        {isEditable && (
           <Col sm={1}>
             <div className="d-grid gap-2">
             <Button
@@ -118,7 +119,17 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             </Button>
             </div>
           </Col>
-        )}
+          </>  
+            :<Col span={20}>
+              <div style={{lineHeight: '8px'}} > 
+                <p>{education?.school}</p>
+                <p className="text-muted" >
+                {education?.major}
+                ({education?.position})
+            </p>
+        </div>
+
+            </Col> }
       </Row>
     </Card.Text>
   );

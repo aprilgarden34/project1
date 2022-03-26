@@ -79,7 +79,8 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
-       {/* ------------------------------- Murter 관련 부분 ------------------------------ */}
+      {isEditable ?  
+        <>
         <Col sm={4}>              
          <Form onSubmit={handleSubmit} encType="multipart/form-data" >         
            <Form.Group controlId="formFile" className="mb-3">
@@ -92,7 +93,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
             </Form.Group>
          </Form>
         </Col>
-      {/* ------------------------------- Murter 관련 부분 -------------------------------- */}
+      
         <Col sm={4}>    
           <div style={{lineHeight: '8px'}} > 
             <p>{certificate.certificateName}</p>
@@ -100,7 +101,6 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
             <p className="text-muted">{certificate.certificateDate}</p>    
           </div>
         </Col>
-        {isEditable && (
             <Col sm={1}>
               <div className="d-grid gap-2">
                 <Button
@@ -126,7 +126,15 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
                 </Button>
               </div>
             </Col>
-        )}
+          </>
+          : <Col sm={{ span: 20 }}>
+              <div style={{lineHeight: '8px'}} > 
+                <p>{certificate.certificateName}</p>
+                <p className="text-muted">{certificate.certificateDesc}</p>
+                <p className="text-muted">{certificate.certificateDate}</p>    
+              </div>
+            </Col>  
+        }
       </ Row>
     </Card.Text>
   );

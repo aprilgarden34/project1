@@ -85,7 +85,8 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
   return (
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
-        {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
+      {isEditable ?  
+        <>
         <Col sm={4}>                                  
           <Form onSubmit= {handleSubmit}>
           <Form.Group controlId="formFile" className="mb-3">
@@ -98,7 +99,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
           </Form.Group>
           </Form>
         </Col>
-          {/*--------------------------- multer 관련 부분 ---------------------------------*/ }
+        
         <Col sm={4}>
           <div style={{lineHeight: "8px"}}>
           <p>{project.projectName}</p>
@@ -108,7 +109,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
           </p>
           </div>
         </Col >
-        {isEditable && (
+
           <Col sm={1}>
             <div className="d-grid gap-2">
               <Button
@@ -135,7 +136,15 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
         </Button>
       </div>    
     </Col>
-        )}
+    </>    
+      : <Col sm={{ span: 20 }}>
+          <div style={{lineHeight: '8px'}} > 
+            <p>{project.projectName}</p>
+            <p className="text-muted">{project.projectDesc}</p>
+            <p className="text-muted" > {`${project.projectStart} ~ ${project.projectEnd}`} </p> 
+           </div>
+         </Col>   
+    }
       </Row>
     </Card.Text>
   );
