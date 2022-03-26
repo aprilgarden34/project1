@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
+import {Modal ,Card, Button, Row, Col, Form } from "react-bootstrap";
 import * as Api from "../../api";
 
 // 편집 버튼 활성화는 isEditable이 true, setIsEditing(true)일 경우만 가능
@@ -8,6 +8,13 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   const [image, setImage] = useState({ preview: '', data: '' })
   const [educationFilePath, setEducationFilePath] = useState(null);
   const [previewMode, setPreviewMode] = useState(false)
+
+// 모달 기능 관련
+
+const [show, setShow] = useState(false);
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
 
 //삭제시 작동
   const handleDelete = async (e) => {
@@ -19,10 +26,13 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
     }
     setEducations((e) => {
       const delEdu = e.filter((v) => v.id !== education.id);
-      alert("정말 삭제하시겠습니까? 확인버튼을 누르시면 데이터는 복구되지 않습니다.")
+       //---
       return delEdu;
     });
   };
+
+//  모달 기능 관련 컴포넌트 //
+
 
    // (프론트) filepath를 (백엔드) DB에 저장하는 handleSubmit 이벤트핸들러
    const handleSubmit = async (e) => {
@@ -71,6 +81,7 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
   };    
 
   return (
+    <>
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
       {isEditable?
@@ -112,12 +123,12 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             <Button
               variant="outline-danger"
               size="sm"
-              onClick={handleDelete}
+              onClick={handleShow}
               className="mr-3"
             >
               삭제
             </Button>
-            </div>
+            </div>     
           </Col>
           </>  
             :<Col span={20}>
@@ -132,7 +143,32 @@ function EducationCard({ educations, setEducations, education, isEditable, setIs
             </Col> }
       </Row>
     </Card.Text>
+
+  
+  {/* 모달 컴퍼넌트 기능 */}
+
+  <Modal show={show} onHide={handleClose} animation={false}>
+  <Modal.Header closeButton>
+    <Modal.Title>주의하세요!</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>한번 삭제하면 돌이킬수 없습니다!</Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleDelete}>
+      삭제
+    </Button>
+    <Button variant="primary" onClick={handleClose}>
+      취소
+    </Button>
+  </Modal.Footer>
+    </Modal>
+  </>
+  
   );
 }
 
 export default EducationCard;
+
+
+
+
+

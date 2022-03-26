@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
 import * as Api from "../api";
 
 function Header() {
  
+//---------------------- 모달 관련 기능 ------------------
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,6 +34,7 @@ function Header() {
   };
 
   return (
+    <>
     <Nav activeKey={location.pathname}
       style={{ 
         verticalAlign: "middle",       
@@ -42,9 +50,7 @@ function Header() {
       </Nav.Item>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={()=> 
-          {Api.delete("user/remove")
-          logout()}}>
+        <Nav.Link onClick={handleShow}>
          Withdraw
         </Nav.Link>
       </Nav.Item>
@@ -61,6 +67,29 @@ function Header() {
       </Nav.Item>
     
     </Nav>
+  
+
+    {/* 모달 컴퍼넌트 기능 */}
+
+    <Modal show={show} onHide={handleClose} animation={false}>
+    <Modal.Header closeButton>
+      <Modal.Title>주의하세요!</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>한번 탈퇴하면 돌이킬수 없습니다!</Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick= {
+        () => { 
+          Api.delete("user/remove")
+          logout()}}>
+        탈퇴
+      </Button>
+      <Button variant="primary" onClick={handleClose}>
+        취소
+      </Button>
+    </Modal.Footer>
+      </Modal>
+    </>  
+   
   );
 }
 

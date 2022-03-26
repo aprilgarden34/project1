@@ -1,4 +1,4 @@
-import { Form ,Card, Button, Row, Col } from "react-bootstrap";
+import { Modal, Form ,Card, Button, Row, Col } from "react-bootstrap";
 import React, {useState} from "react";
 import * as Api from "../../api";
 
@@ -7,6 +7,26 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
   // 이미지 미리보기를 위한 변수 설정
   const [image, setImage] = useState({ preview: '', data: '' })
   const [previewMode, setPreviewMode] = useState(false)
+
+
+  // 모달 기능 관련
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+
+// ---- 삭제 기능 ----------------------------------------------//
+
+const handleDelete = 
+  () => {
+      const index = certificates.indexOf(certificate)              
+      certificates.splice(index, 1)
+      const newCertificates = [...certificates]
+      setCertificates(newCertificates)        
+      Api.delete("certificates", certificate.id )      
+  }
 
  //  ----------------------------------- 파일 업로드 ----------------------------------------
 
@@ -77,6 +97,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
 
 
   return (
+  <>
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
       {isEditable ?  
@@ -114,14 +135,7 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
                   variant="outline-danger"
                   size="sm"
                   className="mr-3"
-                  onClick={() => {
-                                 const index = certificates.indexOf(certificate)              
-                                 certificates.splice(index, 1)
-                                 const newCertificates = [...certificates]
-                                 setCertificates(newCertificates)        
-                                 Api.delete("certificates", certificate.id )      
-                                }
-                            }
+                  onClick={handleShow}                 
                   >삭제
                 </Button>
               </div>
@@ -137,6 +151,26 @@ function CertificateCard({ certificates, setCertificates, certificate, isEditabl
         }
       </ Row>
     </Card.Text>
+  
+   
+  {/* 모달 컴퍼넌트 기능 */}
+
+  <Modal show={show} onHide={handleClose} animation={false}>
+  <Modal.Header closeButton>
+    <Modal.Title>주의하세요!</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>한번 삭제하면 돌이킬수 없습니다!</Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleDelete}>
+      삭제
+    </Button>
+    <Button variant="primary" onClick={handleClose}>
+      취소
+    </Button>
+  </Modal.Footer>
+    </Modal>
+  </>  
+  
   );
 }
 

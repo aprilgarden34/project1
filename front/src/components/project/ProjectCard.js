@@ -6,10 +6,29 @@
 
 import * as Api from "../../api";
 import React, {useState} from "react";
-import { Form, Card, Button, Row, Col } from "react-bootstrap";
+import { Modal ,Form, Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing }) {
  
+  
+  // 모달 기능 관련
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  // 삭제 기능 함수
+
+  const handleDelete = () => {
+    const index = projects.indexOf(project)              
+    projects.splice(index, 1)
+    const newProjects = [...projects]
+    setProjects(newProjects)        
+    Api.delete("projectList", project.id )  
+  }
+
+
   // 이미지 미리보기를 위한 변수 설정
   const [image, setImage] = useState({ preview: '', data: '' })
   const [previewMode, setPreviewMode] = useState(false)
@@ -83,6 +102,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
  // ------------------------------------------------------------------------------------------ 
 
   return (
+    <>
     <Card.Text>
       <Row className="justify-content-between align-items-center mb-2">
       {isEditable ?  
@@ -124,14 +144,7 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
               variant="outline-danger"
               size="sm"
               className="mr-3"
-              onClick={() => {
-                   const index = projects.indexOf(project)              
-                   projects.splice(index, 1)
-                   const newProjects = [...projects]
-                   setProjects(newProjects)        
-                   Api.delete("projectList", project.id )      
-                  }
-              }
+              onClick={handleShow}
         >삭제
         </Button>
       </div>    
@@ -147,6 +160,24 @@ function ProjectCard({ projects, setProjects, project, isEditable, setIsEditing 
     }
       </Row>
     </Card.Text>
+
+  {/* 모달 컴퍼넌트 기능 */}
+
+   <Modal show={show} onHide={handleClose} animation={false}>
+   <Modal.Header closeButton>
+     <Modal.Title>주의하세요!</Modal.Title>
+   </Modal.Header>
+   <Modal.Body>한번 삭제하면 돌이킬수 없습니다!</Modal.Body>
+   <Modal.Footer>
+     <Button variant="secondary" onClick={handleDelete}>
+       삭제
+     </Button>
+     <Button variant="primary" onClick={handleClose}>
+       취소
+     </Button>
+   </Modal.Footer>
+     </Modal>
+   </>  
   );
 }
 
