@@ -147,7 +147,7 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
 });
 
 
-userAuthRouter.delete("/user/remove/:id", login_required, async (req,res)=> {
+userAuthRouter.delete("/user/remove", login_required, async (req,res)=> {
 // 회원 삭제
 
   const user_id = req.currentUserId;

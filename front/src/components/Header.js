@@ -32,7 +32,7 @@ function Header() {
       </Nav.Item>
   {/*-------------------------------------------회원 탈퇴 네비 바------------------------------------------------------------------ */ }
       <Nav.Item>
-        <Nav.Link onClick={() => {Api.delete("user/remove", userState.user.id)
+        <Nav.Link onClick={() => {Api.delete("user/remove")
         logout()
         }}>회원 탈퇴</Nav.Link>
       </Nav.Item>  
