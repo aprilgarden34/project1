@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col, Form } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 function NetworkUserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();

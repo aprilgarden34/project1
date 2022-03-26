@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
+import * as Api from "../api";
 
 function Header() {
  
@@ -36,9 +37,14 @@ function Header() {
     >
       <Nav.Item className="me-auto mb-5">
         <Nav.Link disabled>My Portfolio</Nav.Link>
-      </Nav.Item>
       <Nav.Item>
         <Nav.Link onClick={() => navigate("/")}>My page</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+      </Nav.Item>
+        <Nav.Link onClick={()=> {Api.delete("user/remove")
+        logout()
+      }}>회원 탈퇴</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link onClick={() => navigate("/network")}>Network</Nav.Link>
