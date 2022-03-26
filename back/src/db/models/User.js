@@ -39,7 +39,6 @@ class User {
     );
     return updatedUser;
   }
-
   static async delete({user_id}){
     const userId = await userAuthService.getUserInfo({user_id});
     const user = await UserModel.deleteOne({id: user_id});
@@ -49,6 +48,21 @@ class User {
     await ProjectModel.deleteMany({user_id:userId});
     return user;
   }
+
+  static async addFileById({ userId, filePath }) {
+    const filter = { id: userId };
+    const update = { filePath: filePath };
+    const option = { new: true };
+
+    const addFileUser = await UserModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+
+    return addFileUser;
+  }
+
 }
 
 export { User };

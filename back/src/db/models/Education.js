@@ -33,7 +33,22 @@ class Education {
     const education = await EducationModel.deleteOne({ id });
     return education;
   }
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
+  static async addFileById({ id, filePath }) {
+    const filter = { id };
+    const update = { filePath: filePath };
+    const option = { new: true };
+    // const option = { returnOriginal: false };
+
+    const addFileEducation = await EducationModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+
+    return addFileEducation;
+  }
 }
 
 export { Education };
