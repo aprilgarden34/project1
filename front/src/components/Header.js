@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
-import { NavbarBrand } from "react-bootstrap";
 import * as Api from "../api";
 
 function Header() {
