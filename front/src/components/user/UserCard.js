@@ -62,13 +62,15 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
+        { isEditable ? 
+        <>
         <Form 
             encType="multipart/form-data"
             style={{ display: 'flex' }} 
             onSubmit={handleSubmit}
             >   
             <Form.Group controlId="formFile" className="mb-3">
-              
+            
              {PreviewMode ? <Form><img src={image.preview} alt="preview" width='100%' height='100%' /></Form>
              :<>
               <Form.Label>프로필 사진을 업로드해주세요.</Form.Label>            
@@ -78,7 +80,11 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
               </>}                 
             </Form.Group>
           </Form>
-          
+        </>
+        : <div style={{marginBottom: "15px"}}>
+          <img src={require('./image.jpg')} alt="default" width="100%" height="100%" /> 
+          </div> }
+
         </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
@@ -115,3 +121,4 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 }
 
 export default UserCard;
+
