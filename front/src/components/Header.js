@@ -37,23 +37,29 @@ function Header() {
     >
       <Nav.Item className="me-auto mb-5">
         <Nav.Link disabled>My Portfolio</Nav.Link>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>My page</Nav.Link>
-      </Nav.Item>
+
       <Nav.Item>
       </Nav.Item>
-        <Nav.Link onClick={()=> {Api.delete("user/remove")
-        logout()
-      }}>회원 탈퇴</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link onClick={()=> 
+          {Api.delete("user/remove")
+          logout()}}>
+         Withdraw
+        </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link onClick={() => navigate("/network")}>Network</Nav.Link>
       </Nav.Item>
       {isLogin && (
         <Nav.Item>
-          <Nav.Link onClick={logout}>Logout</Nav.Link>
+          <Nav.Link onClick={logout}>Logout</Nav.Link> 
         </Nav.Item>
       )}
+      <Nav.Item>
+        <Nav.Link onClick={() => navigate("/")}>My page</Nav.Link>
+      </Nav.Item>
+    
     </Nav>
   );
 }
