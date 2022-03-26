@@ -207,36 +207,5 @@ awardRouter.patch(
     }
 );
 
-awardRouter.delete(
-  "/award/deleteFile",
-    login_required, 
-    async function (req, res, next) {
-      try {
-        const user_id = req.currentUserId;
-        const currentUserInfo = await userAuthService.getUserInfo({
-          user_id,
-        });
-
-        if (currentUserInfo.errorMessage) {
-          throw new Error(currentUserInfo.errorMessage);
-        }
-
-
-
-
-
-        // 해당 수상내역 아이디로 수상내역 정보를 db에서 찾아 삭제함.
-        const deletedAward = await awardService.delFile({ awardId });
-  
-        if (deletedAward.errorMessage) {
-          throw new Error(deletedAward.errorMessage);
-        }
-  
-        res.status(200).json(deletedAward);
-      } catch (error) {
-        next(error);
-      }
-    }
-)
 
 export { awardRouter };
