@@ -39,9 +39,19 @@ function Projects({ portfolioOwnerId, isEditable }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
+    <Card
+      style={{
+        marginTop: '30px'
+      }}
+    >
       <Card.Body>
-        <Card.Title>프로젝트</Card.Title>
+        <Card.Title
+          style={{
+            backgroundColor: '#D9D7F1',
+            fontSize: '30px',
+            color: 'black'
+          }}        
+        >프로젝트</Card.Title>
         {projects.map((project) => (
           <Project
             portfolioOwnerId={portfolioOwnerId}
